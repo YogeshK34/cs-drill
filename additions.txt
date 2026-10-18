@@ -1,0 +1,9 @@
+1. Create a Postgres DB using Docker and keep everything in that DB
+2. Create the relevant schema file & add everything to DB 
+3. Add a notes section that'll open a notepad sort of UI where I can 
+    write what I have to work on, and my thoughts. It's missing as of now 
+4. Add basic username, password auth as well, so users can track individual scores 
+5. Add more questions to DB, and follow basic principles like in Technical Assesments
+    I won't get a single length bigger than other, so if I get it in here, I'll sort 
+    of have this habit selecting the lengthiest option 
+6. Any details remaining? 

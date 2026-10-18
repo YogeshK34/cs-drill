@@ -1,0 +1,78 @@
+You are working on an existing Next.js 14 (App Router) project called cs-drill. The technical documentation is in info.md at the project root — read it fully before making any changes. The current stack is Next.js, TypeScript, Tailwind CSS, pnpm, and Geist fonts. Here is what needs to be added:
+
+1. PostgreSQL via Docker
+
+Add a docker-compose.yml that spins up a Postgres 16 Alpine container with a named volume for persistence. Credentials: user drilluser, password drillpassword, db cs_drill, exposed on port 5432.
+The compose file should auto-run scripts/schema.sql on first boot via docker-entrypoint-initdb.d.
+Add DATABASE_URL to .env.local.
+
+2. Schema (scripts/schema.sql)
+Create the following tables:
+
+users — id, username (unique), password (bcrypt hash), created_at
+questions — id, topic, question, options (JSONB array of 4 strings), correct (int 0–3), explanation, created_at. Add index on topic.
+sessions — id, user_id (FK → users), topic, score, correct, wrong, skipped, total (default 20), played_at
+session_results — id, session_id (FK → sessions), question_id (FK → questions, SET NULL on delete), user_answer (nullable int), is_correct (bool), is_skipped (bool)
+notes — id, user_id (unique FK → users), content (text, default empty string), updated_at
+
+3. Auth (username + password)
+
+Install bcryptjs and jsonwebtoken (and their @types).
+Create lib/auth.ts with: hashPassword, verifyPassword, signToken, verifyToken, getSession (reads auth_token httpOnly cookie).
+JWT secret from process.env.JWT_SECRET in .env.local. Token expiry 7 days.
+Create route handlers:
+POST /api/auth/register — validate (username min 3, password min 6), hash password, insert user, set cookie, return user object. Handle duplicate username with 409.
+POST /api/auth/login — verify credentials, set cookie, return user.
+POST /api/auth/logout — clear cookie.
+GET /api/auth/me — return current session user from cookie or null.
+Add a simple login/register UI on the main page that gates the drill. After login show username + logout button in the header. Keep it minimal, same dark zinc design as the rest of the app.
+
+4. Replace /api/questions/route.ts to use Postgres
+
+Query from the questions table instead of lib/questions.ts.
+Mixed topic: 4 questions each from OS, Networks, DBMS, OOP, DSA Theory via UNION ALL with ORDER BY RANDOM().
+Single topic: 20 questions WHERE LOWER(topic) = LOWER($1) ORDER BY RANDOM().
+Return question id in the response — it’s needed for session result tracking.
+
+5. Session tracking
+
+After a drill ends, POST to /api/sessions with: topic, score, correct, wrong, skipped, and a results array of { questionId, userAnswer, isCorrect, isSkipped }.
+The route inserts into sessions and session_results tables, tied to the authenticated user from the cookie.
+Add GET /api/sessions to return the last 10 sessions for the logged-in user (for a history view on the end screen).
+
+6. Notes
+
+Add GET /api/notes — return the note content for the logged-in user (empty string if none).
+Add PUT /api/notes — upsert note content for the logged-in user, update updated_at.
+On the main page, add a Notes button in the header (e.g. a pencil icon). Clicking it opens a slide-in panel or modal (same dark design) with a <textarea> that auto-saves on blur or after 1s debounce. Show a subtle “saved” confirmation. This is a personal scratchpad — no formatting, just plain text.
+
+7. Seed file (scripts/seed.ts)
+
+Seed the questions table with at least 30 questions per topic (150+ total).
+Critical rule for question options: all 4 options for every question must be roughly the same character length (±15 chars). No option should be noticeably longer than others. This prevents the habit of picking the longest answer. Short options are fine as long as they’re all similarly short.
+Run with: npx tsx scripts/seed.ts
+
+8. End screen improvements
+
+After the drill, show a question review list: each question with the user’s answer highlighted (green if correct, red if wrong, grey if skipped) and the correct answer + explanation shown.
+Show per-topic accuracy for that session if Mixed mode was played.
+Show last 5 session scores in a small history panel.
+
+9. lib/db.ts
+
+Create a shared pg.Pool instance using process.env.DATABASE_URL. Export as default.
+
+10. lib/types.ts — update with new types
+
+Add SessionResult: { questionId, question, options, correct, userAnswer, isCorrect, isSkipped, explanation }
+Add User: { id, username }
+Keep existing Question, Topic, DrillStats types.
+
+General rules:
+
+Do not break existing UI or keyboard shortcuts.
+All new API routes must read the auth cookie and return 401 if user is not logged in (except register/login).
+Do not use any new UI libraries — stay within Tailwind CSS and the existing Geist font setup.
+Maintain the same dark zinc design system already in place (
+#09090b bg, zinc-900 cards, emerald/rose for correct/wrong).
+After all changes, update info.md to reflect the new architecture.
