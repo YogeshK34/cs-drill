@@ -1,10 +1,17 @@
 import { Pool } from 'pg';
 import { QUESTION_BANK } from '../lib/questions';
 
+const connectionString =
+  process.env.DATABASE_URL ||
+  'postgres://drilluser:drillpassword@localhost:5433/cs_drill';
+
+const isRemote =
+  connectionString.includes('neon.tech') ||
+  connectionString.includes('sslmode=require');
+
 const pool = new Pool({
-  connectionString:
-    process.env.DATABASE_URL ||
-    'postgres://drilluser:drillpassword@localhost:5433/cs_drill',
+  connectionString,
+  ssl: isRemote ? { rejectUnauthorized: false } : undefined,
 });
 
 async function seed() {
