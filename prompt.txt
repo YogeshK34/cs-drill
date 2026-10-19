@@ -1,78 +1,59 @@
-You are working on an existing Next.js 14 (App Router) project called cs-drill. The technical documentation is in info.md at the project root — read it fully before making any changes. The current stack is Next.js, TypeScript, Tailwind CSS, pnpm, and Geist fonts. Here is what needs to be added:
+Important context: The database is hosted on Neon DB (serverless Postgres). The DATABASE_URL in .env.local is a Neon connection string. Do not add any Docker or local Postgres setup. Use the existing lib/db.ts pool connection as-is — it already points to Neon. If any DB work is needed for this feature, use that same connection.
 
-1. PostgreSQL via Docker
+Read info.md to understand the current codebase. Add a new section to the cs-drill app called “Interview Q&A” alongside the existing MCQ topics. This is a separate mode from the MCQ drill — it’s a flashcard-style reference of real interview questions that have actually been asked at companies.
 
-Add a docker-compose.yml that spins up a Postgres 16 Alpine container with a named volume for persistence. Credentials: user drilluser, password drillpassword, db cs_drill, exposed on port 5432.
-The compose file should auto-run scripts/schema.sql on first boot via docker-entrypoint-initdb.d.
-Add DATABASE_URL to .env.local.
+What to build:
 
-2. Schema (scripts/schema.sql)
-Create the following tables:
+Add a new tab/toggle in the header or topic bar that switches between “MCQ Drill” (existing) and “Interview Q&A” (new). Keep both modes accessible from the same page.
 
-users — id, username (unique), password (bcrypt hash), created_at
-questions — id, topic, question, options (JSONB array of 4 strings), correct (int 0–3), explanation, created_at. Add index on topic.
-sessions — id, user_id (FK → users), topic, score, correct, wrong, skipped, total (default 20), played_at
-session_results — id, session_id (FK → sessions), question_id (FK → questions, SET NULL on delete), user_answer (nullable int), is_correct (bool), is_skipped (bool)
-notes — id, user_id (unique FK → users), content (text, default empty string), updated_at
+The Interview Q&A section is a flashcard reader — not a quiz. The user sees a question, thinks about it, then clicks/taps to reveal the answer. No scoring, no timer. Just read and absorb.
 
-3. Auth (username + password)
+Data — lib/interview-questions.ts
 
-Install bcryptjs and jsonwebtoken (and their @types).
-Create lib/auth.ts with: hashPassword, verifyPassword, signToken, verifyToken, getSession (reads auth_token httpOnly cookie).
-JWT secret from process.env.JWT_SECRET in .env.local. Token expiry 7 days.
-Create route handlers:
-POST /api/auth/register — validate (username min 3, password min 6), hash password, insert user, set cookie, return user object. Handle duplicate username with 409.
-POST /api/auth/login — verify credentials, set cookie, return user.
-POST /api/auth/logout — clear cookie.
-GET /api/auth/me — return current session user from cookie or null.
-Add a simple login/register UI on the main page that gates the drill. After login show username + logout button in the header. Keep it minimal, same dark zinc design as the rest of the app.
+Create a static file (no DB needed for now) with at least 60 real interview questions grouped by topic. Every question must have:
 
-4. Replace /api/questions/route.ts to use Postgres
+company: where it was actually asked (e.g. "Cohesity", "Google", "Common")
+topic: same 5 topics as MCQ — OS, Networks, DBMS, OOP, DSA Theory
+question: the exact question as asked in an interview
+answer: a clear, concise answer (3–6 lines max, interview-ready, no fluff)
+tags: 1–3 keyword tags e.g. ["exception handling", "java", "error"]
 
-Query from the questions table instead of lib/questions.ts.
-Mixed topic: 4 questions each from OS, Networks, DBMS, OOP, DSA Theory via UNION ALL with ORDER BY RANDOM().
-Single topic: 20 questions WHERE LOWER(topic) = LOWER($1) ORDER BY RANDOM().
-Return question id in the response — it’s needed for session result tracking.
+Example entry:
 
-5. Session tracking
+ts
+{
+  company: "Cohesity",
+  topic: "OOP",
+  question: "What is the difference between an Error and an Exception?",
+  answer: "An Error represents a serious system-level problem the application cannot recover from (e.g. OutOfMemoryError, StackOverflowError). An Exception is a recoverable condition the program can catch and handle. Errors are usually thrown by the JVM; Exceptions are thrown by application or library code.",
+  tags: ["error", "exception", "java"]
+}
 
-After a drill ends, POST to /api/sessions with: topic, score, correct, wrong, skipped, and a results array of { questionId, userAnswer, isCorrect, isSkipped }.
-The route inserts into sessions and session_results tables, tied to the authenticated user from the cookie.
-Add GET /api/sessions to return the last 10 sessions for the logged-in user (for a history view on the end screen).
+Cover these questions at minimum across all 5 topics:
 
-6. Notes
+OOP — Error vs Exception, abstract class vs interface, overloading vs overriding, deep vs shallow copy, what is a destructor, checked vs unchecked exceptions, SOLID with real examples, when to use composition over inheritance, what is a vtable
 
-Add GET /api/notes — return the note content for the logged-in user (empty string if none).
-Add PUT /api/notes — upsert note content for the logged-in user, update updated_at.
-On the main page, add a Notes button in the header (e.g. a pencil icon). Clicking it opens a slide-in panel or modal (same dark design) with a <textarea> that auto-saves on blur or after 1s debounce. Show a subtle “saved” confirmation. This is a personal scratchpad — no formatting, just plain text.
+OS — process vs thread, deadlock conditions and prevention, mutex vs semaphore, what happens when you run a program, virtual memory and why it exists, context switching cost, what is a race condition, zombie vs orphan process, thrashing
 
-7. Seed file (scripts/seed.ts)
+Networks — what happens when you type a URL, TCP vs UDP and when to use each, what is a CDN, HTTP vs HTTPS, what is a socket, DNS resolution steps, what is a load balancer, difference between latency and throughput, REST vs GraphQL
 
-Seed the questions table with at least 30 questions per topic (150+ total).
-Critical rule for question options: all 4 options for every question must be roughly the same character length (±15 chars). No option should be noticeably longer than others. This prevents the habit of picking the longest answer. Short options are fine as long as they’re all similarly short.
-Run with: npx tsx scripts/seed.ts
+DBMS — ACID properties with real example, SQL vs NoSQL when to use which, what is an index and when not to use one, difference between clustered and non-clustered index, what is a transaction, INNER vs LEFT JOIN, what is N+1 query problem, CAP theorem with examples, what is connection pooling
 
-8. End screen improvements
+DSA Theory — when to use HashMap vs TreeMap, what is amortized complexity, stable vs unstable sort, when does quicksort go O(n²), difference between BFS and DFS and when to use each, what is dynamic programming vs greedy, what is a heap and when to use it, difference between stack and queue
 
-After the drill, show a question review list: each question with the user’s answer highlighted (green if correct, red if wrong, grey if skipped) and the correct answer + explanation shown.
-Show per-topic accuracy for that session if Mixed mode was played.
-Show last 5 session scores in a small history panel.
+UI behavior:
 
-9. lib/db.ts
-
-Create a shared pg.Pool instance using process.env.DATABASE_URL. Export as default.
-
-10. lib/types.ts — update with new types
-
-Add SessionResult: { questionId, question, options, correct, userAnswer, isCorrect, isSkipped, explanation }
-Add User: { id, username }
-Keep existing Question, Topic, DrillStats types.
+Filter by topic using the same chip design as the MCQ topic bar
+Each card shows: company badge, topic tag, the question in bold
+Tapping/clicking the card flips it or expands it to show the answer (toggle, not a new page)
+Tags shown at the bottom of the answer
+A small search bar to filter by keyword across questions and tags
+Keep the same dark zinc design — no new libraries
 
 General rules:
 
-Do not break existing UI or keyboard shortcuts.
-All new API routes must read the auth cookie and return 401 if user is not logged in (except register/login).
-Do not use any new UI libraries — stay within Tailwind CSS and the existing Geist font setup.
-Maintain the same dark zinc design system already in place (
-#09090b bg, zinc-900 cards, emerald/rose for correct/wrong).
-After all changes, update info.md to reflect the new architecture.
+Do not touch any existing MCQ drill code
+Static data only for now, no new DB tables
+Same dark zinc design system (
+#09090b bg, zinc-900 cards)
+Update info.md after implementing

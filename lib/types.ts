@@ -17,3 +17,14 @@ export interface DrillStats {
   currentStreak: number;
   maxStreak: number;
 }
+
+export type InterviewTopic = "OS" | "Networks" | "DBMS" | "OOP" | "DSA Theory";
+
+export interface InterviewQuestion {
+  id?: string;
+  company: string;
+  topic: InterviewTopic;
+  question: string;
+  answer: string;
+  tags: string[];
+}

@@ -87,20 +87,30 @@ Every session serves a curated batch of **20 questions** selected either specifi
 cs-drill/
 ├── app/
 │   ├── api/
+│   │   ├── auth/                # Session and authentication routes
+│   │   ├── notes/               # User notes API
 │   │   └── questions/
 │   │       └── route.ts         # GET /api/questions Route Handler
 │   ├── favicon.ico              # Browser icon
 │   ├── globals.css              # Dark theme tokens, touch manipulation, scrollbar styling
 │   ├── layout.tsx               # Root layout, Geist font loader, mobile viewport & PWA meta
-│   └── page.tsx                 # Core interactive MCQ client component
+│   ├── login/page.tsx           # Authentication login page
+│   ├── notes/page.tsx           # Revision notes client interface
+│   ├── register/page.tsx        # User registration page
+│   └── page.tsx                 # Core page with Mode Toggle (MCQ Drill vs Interview Q&A)
+├── components/
+│   └── InterviewQA.tsx          # Interview Q&A flashcard reader with search & topic filter
 ├── lib/
+│   ├── db.ts                    # Neon DB (serverless Postgres) connection pool singleton
+│   ├── interview-questions.ts   # 70+ Curated real interview questions by topic & company
 │   ├── questions.ts             # 100+ Question bank & Fisher-Yates shuffle engine
-│   └── types.ts                 # TypeScript interfaces (Question, Topic, DrillStats)
+│   ├── session.ts               # JWT session signing and cookie management
+│   └── types.ts                 # TypeScript interfaces (Question, InterviewQuestion, etc.)
 ├── public/                      # Static branding assets
 ├── next.config.ts               # Next.js 16 configuration (Turbopack, cacheComponents)
 ├── package.json                 # Project dependencies & scripts
 ├── pnpm-lock.yaml               # Locked dependency tree
-├── prompt.txt                   # Original project requirement specification
+├── prompt.txt                   # Project requirement specification
 ├── README.md                    # Quickstart & Docker guide
 └── info.md                      # Complete technical reference manual (this document)
 ```
@@ -110,21 +120,38 @@ cs-drill/
 #### `lib/types.ts`
 Defines the strict contracts used throughout the app:
 - `Topic`: `"Mixed" | "OS" | "Networks" | "DBMS" | "OOP" | "DSA Theory"`
-- `Question`:
+- `InterviewTopic`: `"OS" | "Networks" | "DBMS" | "OOP" | "DSA Theory"`
+- `Question`: MCQ schema with `options` and `correct` answer index.
+- `InterviewQuestion`:
   ```ts
-  export interface Question {
+  export interface InterviewQuestion {
     id?: string;
-    topic: string;
+    company: string;
+    topic: InterviewTopic;
     question: string;
-    options: string[]; // Exactly 4 strings
-    correct: number;   // 0-indexed integer (0, 1, 2, or 3)
-    explanation: string;
+    answer: string;      // 3–6 lines max, interview-ready
+    tags: string[];      // 1–3 keyword tags
   }
   ```
 - `DrillStats`: Tracks `score`, `correctCount`, `wrongCount`, `skippedCount`, `currentStreak`, and `maxStreak`.
 
+#### `lib/interview-questions.ts`
+- Houses a curated static reference bank of 70+ real interview questions from companies like Google, Meta, Microsoft, Amazon, Cohesity, Apple, Uber, Netflix, Stripe, and Goldman Sachs.
+- Covers the 5 core CS domains (OS, Networks, DBMS, OOP, DSA Theory).
+- Includes concise, interview-ready answers (3-6 lines) and keyword tags.
+- Provides `getInterviewQuestions(topic?: string)` filter helper.
+
+#### `components/InterviewQA.tsx`
+- Client-side flashcard-style reader for interview questions.
+- Includes:
+  - Topic filter chips matching the MCQ chip design (All, OS, Networks, DBMS, OOP, DSA Theory).
+  - Search input filtering dynamically across questions, answers, company badges, and tags.
+  - "Expand All" and "Collapse All" controls.
+  - Interactive flashcards showing company badge, topic badge, bold question, tap-to-reveal answer, and bottom keyword tags (clickable for quick search filtering).
+  - Zero scoring, zero timers — designed for reading and absorption.
+
 #### `lib/questions.ts`
-- Houses the localized question bank (`QUESTION_BANK`) containing 100+ questions.
+- Houses the localized MCQ question bank (`QUESTION_BANK`) containing 100+ questions.
 - Includes `shuffleArray()` utilizing the Fisher-Yates algorithm.
 - Includes `shuffleQuestionOptions()`: Scrambles the 4 options on every fetch and dynamically recalculates the `correct` index so that the correct answer is evenly distributed across A, B, C, and D without answer-order bias.
 - `getQuestions(topic, count)`: Extracts 20 items based on topic or distributes 4 questions per topic when `Mixed` is selected.
@@ -133,18 +160,23 @@ Defines the strict contracts used throughout the app:
 - Handles `GET /api/questions?topic=<topic>`.
 - Compatible with Next.js 16 `cacheComponents` via `await connection()` from `next/server` to ensure request-time execution.
 - Returns `Question[]` with HTTP 200 and `Cache-Control: no-store, max-age=0`.
-- Includes commented integration block for the Anthropic Claude API (`claude-3-5-sonnet-20241022`).
+- Priority: Anthropic Claude API (if configured) → Neon PostgreSQL (`questions` table) → localized question bank fallback.
+
+#### `app/api/interview-questions/route.ts`
+- Handles `GET /api/interview-questions?topic=<topic>&search=<search>`.
+- Directly queries the `interview_questions` table in Neon DB (serverless Postgres) via the connection pool singleton.
+- Supports topic and keyword/tag filtering directly in SQL with a fallback to the localized question bank.
+- Returns `InterviewQuestion[]` with `X-Data-Source: neon-postgres`.
 
 #### `app/page.tsx`
 - Complete interactive client component (`"use client"`).
-- Manages state for question indexing, option selection, skipping, scoring, streak tracking, question histories, and keyboard listeners.
+- Hosts the Header Mode Toggle switching seamlessly between **MCQ Drill** and **Interview Q&A**.
+- Preserves MCQ drill state across mode switches.
+- Manages state for question indexing, option selection, skipping, scoring, streak tracking, question histories, and keyboard listeners (active exclusively in MCQ mode).
 - Renders:
-  - Header with branding, topic label, animated streak badge, score counter, and progress bar.
-  - Horizontal swipeable topic selector chips.
-  - Question card with 4 interactive option buttons.
-  - Explanation card with color-coded status badges (`[CORRECT]`, `[INCORRECT]`, `[QUESTION SKIPPED]`).
-  - Action footer with dual keyboard and touch action buttons.
-  - End screen with accuracy percentage, metrics grid, question pill timeline, and restart options.
+  - Header with mode toggle ("MCQ Drill" vs "Interview Q&A"), branding, topic label, streak badge, score counter, and progress bar.
+  - In MCQ mode: topic chips, question card, explanation card, and shortcut footer.
+  - In Interview mode: `<InterviewQA />` flashcard reader.
 
 #### `app/globals.css`
 - Applies dark theme base colors (`#09090b` background, `#f4f4f5` foreground).
@@ -208,6 +240,26 @@ flowchart TD
 - Displays an animated flame badge: `🔥 2 STREAK`, `🔥 3 STREAK`.
 - Resets to 0 immediately if a question is answered incorrectly or skipped.
 - The highest streak achieved during a session is recorded and showcased on the End Screen as `BEST STREAK`.
+
+### 5.4 Interview Q&A Flashcard Mode
+- **Reference-First Design**: Dedicated study mode focused on reading and absorbing high-yield concepts actually tested in technical interviews.
+- **Zero Stress**: No scoring, timers, or answer tracking; questions are reviewed at the candidate's own pace.
+- **Topic Filter Chips**: Native Android-style filter chips for `All`, `OS`, `Networks`, `DBMS`, `OOP`, and `DSA Theory`.
+- **Dynamic Search**: Instant search bar filtering across question titles, company names, full-text answers, and tags.
+- **Interactive Flashcards**:
+  - Company badge (`🏢 Google`, `🏢 Cohesity`, `🏢 Amazon`, etc.)
+  - Domain topic tag (`OS`, `Networks`, `DBMS`, `OOP`, `DSA Theory`)
+  - Bold question statement
+  - Tap / click toggle to expand or collapse the interview-ready answer (3–6 lines max, no fluff)
+  - Keyword tags at the base of the answer (clickable to immediately filter the search view)
+  - Global "Expand Page" and "Collapse All" quick-action toggles
+- **Pagination & Page Size Controls**:
+  - Configurable page sizes: **10** (default), **20**, or **All** questions per view.
+  - Active item range counter (`Showing 1–10 of 70 questions`) with dynamic total page indicators.
+  - Numeric page buttons with intelligent ellipsis truncation (`1`, `2`, `3`, `4`, `...`, `7`).
+  - Tactile `← Prev` and `Next →` navigation buttons with auto-disabled boundaries.
+  - Automatic page reset to Page 1 upon changing topic filter chips or typing search queries.
+  - Smooth scroll to the top of the question list when navigating across pages.
 
 ---
 

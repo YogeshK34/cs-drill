@@ -3,11 +3,13 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { Question, Topic } from "@/lib/types";
+import InterviewQA from "@/components/InterviewQA";
 
 const TOPICS: Topic[] = ["Mixed", "OS", "Networks", "DBMS", "OOP", "DSA Theory"];
 const QUIZ_STORAGE_KEY = "cs_drill_active_quiz_v1";
 
 export default function Home() {
+  const [mode, setMode] = useState<"mcq" | "interview">("mcq");
   const [topic, setTopic] = useState<Topic>("Mixed");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -228,6 +230,7 @@ export default function Home() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (mode !== "mcq") return;
 
       const key = e.key.toLowerCase();
 
@@ -269,7 +272,7 @@ export default function Home() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isComplete, loading, isAnswered, handleSelectOption, handleSkip, handleNext, handleRestart]);
+  }, [mode, isComplete, loading, isAnswered, handleSelectOption, handleSkip, handleNext, handleRestart]);
 
   // Progress percentage
   const totalQuestions = questions.length || 20;
@@ -283,7 +286,7 @@ export default function Home() {
       {/* Top Header - Mobile and Android optimized */}
       <header className="border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur sticky top-0 z-30">
         <div className="max-w-4xl mx-auto px-3.5 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between gap-2">
-          {/* Logo & Current Topic */}
+          {/* Logo & Current Mode / Topic */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
             <span className="font-mono text-sm sm:text-base font-bold tracking-tight text-white flex items-center gap-1.5 shrink-0">
               <span className="inline-block w-2.5 h-2.5 rounded-sm bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
@@ -291,41 +294,71 @@ export default function Home() {
             </span>
             <span className="text-zinc-600 font-mono text-xs">/</span>
             <span className="font-mono text-[11px] sm:text-xs text-zinc-400 uppercase tracking-wider truncate max-w-[90px] sm:max-w-none">
-              {topic}
+              {mode === "mcq" ? topic : "Q&A"}
             </span>
           </div>
 
-          {/* Quick stats in header */}
-          <div className="flex items-center gap-2 sm:gap-3 font-mono text-xs shrink-0">
-            {/* Streak counter: Shows only when streak >= 2 */}
-            {currentStreak >= 2 && (
-              <div className="flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-amber-500/15 border border-amber-500/40 text-amber-400 font-semibold animate-pulse text-[11px] sm:text-xs shadow-[0_0_10px_rgba(245,158,11,0.2)]">
-                <span>🔥</span>
-                <span>{currentStreak}</span>
-                <span className="hidden xs:inline">STREAK</span>
-              </div>
-            )}
-
-            {!isComplete && questions.length > 0 && (
-              <div className="flex items-center gap-1 sm:gap-1.5 text-zinc-400 bg-zinc-900/90 border border-zinc-800 px-2.5 py-1 rounded-md text-[11px] sm:text-xs">
-                <span className="hidden xs:inline">SCORE:</span>
-                <span className="text-emerald-400 font-bold">{score}</span>
-                <span className="text-zinc-600">/</span>
-                <span className="text-zinc-300">{totalQuestions}</span>
-              </div>
-            )}
-
-            {/* Explicit Refresh Quiz button */}
+          {/* Mode Switcher - Desktop */}
+          <div className="hidden sm:inline-flex p-0.5 sm:p-1 bg-zinc-900/90 border border-zinc-800 rounded-lg shrink-0">
             <button
               type="button"
-              onClick={handleRefreshQuiz}
-              disabled={loading}
-              title="Refresh / restart quiz with new questions"
-              className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-900/90 border border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 active:scale-95 transition text-[11px] sm:text-xs font-mono disabled:opacity-50"
+              onClick={() => setMode("mcq")}
+              className={`px-3 py-1 rounded-md text-xs font-mono transition-all cursor-pointer ${
+                mode === "mcq"
+                  ? "bg-zinc-100 text-zinc-950 font-semibold shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
             >
-              <span className={loading ? "animate-spin" : ""}>🔄</span>
-              <span className="hidden sm:inline">Refresh</span>
+              MCQ Drill
             </button>
+            <button
+              type="button"
+              onClick={() => setMode("interview")}
+              className={`px-3 py-1 rounded-md text-xs font-mono transition-all cursor-pointer ${
+                mode === "interview"
+                  ? "bg-zinc-100 text-zinc-950 font-semibold shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
+            >
+              Interview Q&A
+            </button>
+          </div>
+
+          {/* Header Action Controls & Stats */}
+          <div className="flex items-center gap-2 sm:gap-3 font-mono text-xs shrink-0">
+            {mode === "mcq" && (
+              <>
+                {/* Streak counter: Shows only when streak >= 2 */}
+                {currentStreak >= 2 && (
+                  <div className="flex items-center gap-1 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-amber-500/15 border border-amber-500/40 text-amber-400 font-semibold animate-pulse text-[11px] sm:text-xs shadow-[0_0_10px_rgba(245,158,11,0.2)]">
+                    <span>🔥</span>
+                    <span>{currentStreak}</span>
+                    <span className="hidden xs:inline">STREAK</span>
+                  </div>
+                )}
+
+                {!isComplete && questions.length > 0 && (
+                  <div className="flex items-center gap-1 sm:gap-1.5 text-zinc-400 bg-zinc-900/90 border border-zinc-800 px-2.5 py-1 rounded-md text-[11px] sm:text-xs">
+                    <span className="hidden xs:inline">SCORE:</span>
+                    <span className="text-emerald-400 font-bold">{score}</span>
+                    <span className="text-zinc-600">/</span>
+                    <span className="text-zinc-300">{totalQuestions}</span>
+                  </div>
+                )}
+
+                {/* Explicit Refresh Quiz button */}
+                <button
+                  type="button"
+                  onClick={handleRefreshQuiz}
+                  disabled={loading}
+                  title="Refresh / restart quiz with new questions"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-900/90 border border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 active:scale-95 transition text-[11px] sm:text-xs font-mono disabled:opacity-50 cursor-pointer"
+                >
+                  <span className={loading ? "animate-spin" : ""}>🔄</span>
+                  <span className="hidden sm:inline">Refresh</span>
+                </button>
+              </>
+            )}
 
             {/* Notes nav link */}
             <Link
@@ -343,7 +376,7 @@ export default function Home() {
                 await fetch("/api/auth/logout", { method: "POST" });
                 window.location.href = "/login";
               }}
-              className="px-2 py-1 rounded-md border border-zinc-800/80 text-zinc-500 hover:text-rose-400 hover:border-rose-900/60 transition text-[11px] sm:text-xs font-mono"
+              className="px-2 py-1 rounded-md border border-zinc-800/80 text-zinc-500 hover:text-rose-400 hover:border-rose-900/60 transition text-[11px] sm:text-xs font-mono cursor-pointer"
               title="Sign Out"
             >
               <span className="sm:hidden">⎋</span>
@@ -352,8 +385,36 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Global Progress Bar */}
-        {!isComplete && questions.length > 0 && (
+        {/* Mobile Mode Switcher Banner */}
+        <div className="sm:hidden px-3.5 pb-2 pt-0.5 border-t border-zinc-800/40">
+          <div className="grid grid-cols-2 p-0.5 bg-zinc-900/90 border border-zinc-800 rounded-lg text-center font-mono">
+            <button
+              type="button"
+              onClick={() => setMode("mcq")}
+              className={`py-1 rounded-md text-xs transition-all cursor-pointer ${
+                mode === "mcq"
+                  ? "bg-zinc-100 text-zinc-950 font-semibold shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
+            >
+              MCQ Drill
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("interview")}
+              className={`py-1 rounded-md text-xs transition-all cursor-pointer ${
+                mode === "interview"
+                  ? "bg-zinc-100 text-zinc-950 font-semibold shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
+            >
+              Interview Q&A
+            </button>
+          </div>
+        </div>
+
+        {/* Global Progress Bar (only in MCQ mode) */}
+        {mode === "mcq" && !isComplete && questions.length > 0 && (
           <div className="w-full bg-zinc-900 h-1 overflow-hidden">
             <div
               className="bg-emerald-500 h-full transition-all duration-300 ease-out shadow-[0_0_8px_rgba(16,185,129,0.4)]"
@@ -365,8 +426,12 @@ export default function Home() {
 
       {/* Main Container */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-3.5 sm:px-4 py-4 sm:py-6 flex flex-col justify-between safe-pb">
-        {/* Topic Selector - Horizontal swipe chips on Android & mobile */}
-        <section className="mb-4 sm:mb-6">
+        {mode === "interview" ? (
+          <InterviewQA />
+        ) : (
+          <>
+            {/* Topic Selector - Horizontal swipe chips on Android & mobile */}
+            <section className="mb-4 sm:mb-6">
           <div className="flex items-center justify-between mb-2">
             <span className="font-mono text-[11px] sm:text-xs text-zinc-500 uppercase tracking-widest">
               SELECT TOPIC
@@ -722,6 +787,8 @@ export default function Home() {
             </div>
           )}
         </div>
+          </>
+        )}
       </main>
 
       {/* Footer */}

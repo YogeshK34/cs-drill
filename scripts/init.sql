@@ -38,3 +38,17 @@ CREATE TABLE IF NOT EXISTS notes (
 );
 
 CREATE INDEX IF NOT EXISTS idx_notes_user_id ON notes (user_id);
+
+-- Interview questions table: flashcard-style interview questions by topic & company
+CREATE TABLE IF NOT EXISTS interview_questions (
+    id          SERIAL PRIMARY KEY,
+    company     VARCHAR(100) NOT NULL,
+    topic       VARCHAR(50)  NOT NULL,
+    question    TEXT         NOT NULL,
+    answer      TEXT         NOT NULL,
+    tags        JSONB        NOT NULL DEFAULT '[]',
+    created_at  TIMESTAMPTZ  DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_interview_questions_topic ON interview_questions (topic);
+CREATE INDEX IF NOT EXISTS idx_interview_questions_company ON interview_questions (company);
