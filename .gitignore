@@ -24,6 +24,8 @@
 .DS_Store
 *.pem
 *.sql
+!scripts/init.sql
+!scripts/sql-lab-schema.sql
 
 # debug
 npm-debug.log*

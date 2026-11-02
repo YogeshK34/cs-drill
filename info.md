@@ -89,28 +89,34 @@ cs-drill/
 │   ├── api/
 │   │   ├── auth/                # Session and authentication routes
 │   │   ├── notes/               # User notes API
-│   │   └── questions/
-│   │       └── route.ts         # GET /api/questions Route Handler
+│   │   ├── questions/           # GET /api/questions Route Handler
+│   │   └── sql-lab/             # SQL Lab APIs (run, tables, sessions)
+│   │       ├── run/route.ts     # POST: Safe read-only transaction query runner
+│   │       ├── tables/route.ts  # GET: Schema table viewer data
+│   │       └── sessions/route.ts # GET/POST: Question attempt & reveal progress
 │   ├── favicon.ico              # Browser icon
 │   ├── globals.css              # Dark theme tokens, touch manipulation, scrollbar styling
 │   ├── layout.tsx               # Root layout, Geist font loader, mobile viewport & PWA meta
 │   ├── login/page.tsx           # Authentication login page
 │   ├── notes/page.tsx           # Revision notes client interface
 │   ├── register/page.tsx        # User registration page
-│   └── page.tsx                 # Core page with Mode Toggle (MCQ Drill vs Interview Q&A)
+│   └── page.tsx                 # Core page with Mode Toggle (MCQ Drill vs Interview Q&A vs SQL Lab)
 ├── components/
-│   └── InterviewQA.tsx          # Interview Q&A flashcard reader with search & topic filter
+│   ├── InterviewQA.tsx          # Interview Q&A flashcard reader with search & topic filter
+│   └── SqlLab.tsx               # SQL Lab interactive terminal, schema viewer & question runner
 ├── lib/
 │   ├── db.ts                    # Neon DB (serverless Postgres) connection pool singleton
 │   ├── interview-questions.ts   # 70+ Curated real interview questions by topic & company
 │   ├── questions.ts             # 100+ Question bank & Fisher-Yates shuffle engine
 │   ├── session.ts               # JWT session signing and cookie management
+│   ├── sql-questions.ts         # 64 Curated SQL questions across 8 progression levels
 │   └── types.ts                 # TypeScript interfaces (Question, InterviewQuestion, etc.)
 ├── public/                      # Static branding assets
 ├── next.config.ts               # Next.js 16 configuration (Turbopack, cacheComponents)
 ├── package.json                 # Project dependencies & scripts
 ├── pnpm-lock.yaml               # Locked dependency tree
 ├── prompt.txt                   # Project requirement specification
+├── prompt.md                    # SQL Lab requirement specification
 ├── README.md                    # Quickstart & Docker guide
 └── info.md                      # Complete technical reference manual (this document)
 ```
@@ -149,6 +155,34 @@ Defines the strict contracts used throughout the app:
   - "Expand All" and "Collapse All" controls.
   - Interactive flashcards showing company badge, topic badge, bold question, tap-to-reveal answer, and bottom keyword tags (clickable for quick search filtering).
   - Zero scoring, zero timers — designed for reading and absorption.
+
+#### `components/SqlLab.tsx`
+- Client-side interactive SQL terminal and simulated practice environment.
+- Renders:
+  - **Level Selector**: 8 mastery levels (`Beginner`, `SELECT`, `WHERE`, `ORDER BY`, `Aggregation`, `JOINs`, `Subqueries`, `Window Functions`).
+  - **Question Panel**: Title, detailed prompt description, table badges, and toggleable hint.
+  - **Table Viewer**: Real-time inspection of seeded Postgres tables (`employees`, `departments`, `projects`, `assignments`, `orders`) with uppercase monospace headers, zebra striping, and row counters.
+  - **Terminal Input**: Dark `#0d1117` terminal console with `#4ade80` green syntax color, `$` prompt prefix, and `Ctrl+Enter` shortcut.
+  - **Output Panel**: Real query results rendered as interactive data tables or informative error diagnostics (e.g. read-only violations).
+  - **Answer & Solution Panel**: Toggleable canonical SQL solution with "Load into terminal" action and comprehensive takeaway explanation.
+  - **Navigation**: Prev / Next question navigation with progress state persistence.
+
+#### `lib/sql-questions.ts`
+- Curated static question bank containing 64 deterministic SQL problems (8 per level).
+- Covers full relational SQL spectrum from basic projections up to Common Table Expressions (CTEs) and Window Functions (`ROW_NUMBER`, `RANK`, `DENSE_RANK`, `LAG`, `LEAD`).
+- All queries execute deterministically against the seeded `sql_lab` schema in Neon DB.
+
+#### `app/api/sql-lab/run/route.ts`
+- Secure query execution endpoint.
+- Wraps user SQL statements within an explicit read-only transaction: `BEGIN; SET TRANSACTION READ ONLY; SET LOCAL statement_timeout = 5000; SET LOCAL search_path TO sql_lab, public; <user query>; ROLLBACK;`.
+- Automatically rejects mutations (`INSERT`, `UPDATE`, `DELETE`, `DROP`, `CREATE`, `TRUNCATE`) with `⚠ Only SELECT queries are allowed in SQL Lab`.
+- Enforces 5-second execution timeout and caps result sets at 100 rows.
+
+#### `app/api/sql-lab/tables/route.ts`
+- Whitelisted schema introspection endpoint returning live table columns, row data, and row counts from Neon DB.
+
+#### `app/api/sql-lab/sessions/route.ts`
+- User progress tracking endpoint managing question attempt histories and answer reveal states stored persistently in `sql_lab.progress`.
 
 #### `lib/questions.ts`
 - Houses the localized MCQ question bank (`QUESTION_BANK`) containing 100+ questions.
@@ -260,6 +294,36 @@ flowchart TD
   - Tactile `← Prev` and `Next →` navigation buttons with auto-disabled boundaries.
   - Automatic page reset to Page 1 upon changing topic filter chips or typing search queries.
   - Smooth scroll to the top of the question list when navigating across pages.
+
+### 5.5 SQL Lab Interactive Practice Mode
+- **Deterministic SQL Simulator**: Solves real SQL problems against a persistent Postgres database in Neon DB without AI hallucinations.
+- **Dedicated Postgres Schema (`sql_lab`)**:
+  - `employees`: 18 realistic records with varied salaries, departments, manager self-references, and hire dates.
+  - `departments`: 5 core divisions (Engineering, Marketing, Sales, HR, Finance) with budgets and leadership foreign keys.
+  - `projects`: 15 active, completed, and on-hold initiatives with realistic milestone deadlines.
+  - `assignments`: 20 junction records allocating staff to projects with specific roles and allocated weekly hours.
+  - `orders`: 20 hardware orders tracking hardware purchases, unit quantities, and transaction costs.
+  - `progress`: Persistent per-user tracking of attempted problems and revealed solutions.
+- **Native Transaction Isolation**:
+  - Every user query runs in a wrapped transaction:
+    ```sql
+    BEGIN;
+    SET TRANSACTION READ ONLY;
+    SET LOCAL statement_timeout = 5000;
+    SET LOCAL search_path TO sql_lab, public;
+    <user query>;
+    ROLLBACK;
+    ```
+  - Data mutations are stopped natively by PostgreSQL, returning a clean alert: `⚠ Only SELECT queries are allowed in SQL Lab`.
+- **Pedagogical Progression**:
+  1. `Beginner`: Projections, column aliasing, and raw table scans.
+  2. `SELECT`: Distinct sets, arithmetic expressions, and result limits.
+  3. `WHERE`: Filtering logic, `BETWEEN`, `IN`, `LIKE`, and three-valued `IS NULL` semantics.
+  4. `ORDER BY / LIMIT`: Ascending/descending sorts, multi-column ordering, and pagination with `OFFSET`.
+  5. `Aggregation`: Group summaries via `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `GROUP BY`, and post-aggregate `HAVING`.
+  6. `JOINs`: `INNER JOIN`, `LEFT OUTER JOIN`, hierarchical self-joins (`employees` to `managers`), and 3-table entity associations.
+  7. `Subqueries`: Scalar subqueries, `IN` subqueries, derived tables in `FROM`, and correlated subqueries.
+  8. `Window Functions`: `ROW_NUMBER()`, `RANK()`, `DENSE_RANK()`, `LAG()`, `LEAD()`, cumulative running totals, and CTE rankings.
 
 ---
 

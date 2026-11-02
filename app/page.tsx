@@ -4,12 +4,13 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import Link from "next/link";
 import { Question, Topic } from "@/lib/types";
 import InterviewQA from "@/components/InterviewQA";
+import SqlLab from "@/components/SqlLab";
 
 const TOPICS: Topic[] = ["Mixed", "OS", "Networks", "DBMS", "OOP", "DSA Theory"];
 const QUIZ_STORAGE_KEY = "cs_drill_active_quiz_v1";
 
 export default function Home() {
-  const [mode, setMode] = useState<"mcq" | "interview">("mcq");
+  const [mode, setMode] = useState<"mcq" | "interview" | "sql">("mcq");
   const [topic, setTopic] = useState<Topic>("Mixed");
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -294,7 +295,7 @@ export default function Home() {
             </span>
             <span className="text-zinc-600 font-mono text-xs">/</span>
             <span className="font-mono text-[11px] sm:text-xs text-zinc-400 uppercase tracking-wider truncate max-w-[90px] sm:max-w-none">
-              {mode === "mcq" ? topic : "Q&A"}
+              {mode === "mcq" ? topic : mode === "interview" ? "Q&A" : "SQL Lab"}
             </span>
           </div>
 
@@ -321,6 +322,17 @@ export default function Home() {
               }`}
             >
               Interview Q&A
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("sql")}
+              className={`px-3 py-1 rounded-md text-xs font-mono transition-all cursor-pointer ${
+                mode === "sql"
+                  ? "bg-zinc-100 text-zinc-950 font-semibold shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
+            >
+              SQL Lab
             </button>
           </div>
 
@@ -387,7 +399,7 @@ export default function Home() {
 
         {/* Mobile Mode Switcher Banner */}
         <div className="sm:hidden px-3.5 pb-2 pt-0.5 border-t border-zinc-800/40">
-          <div className="grid grid-cols-2 p-0.5 bg-zinc-900/90 border border-zinc-800 rounded-lg text-center font-mono">
+          <div className="grid grid-cols-3 p-0.5 bg-zinc-900/90 border border-zinc-800 rounded-lg text-center font-mono">
             <button
               type="button"
               onClick={() => setMode("mcq")}
@@ -397,7 +409,7 @@ export default function Home() {
                   : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              MCQ Drill
+              MCQ
             </button>
             <button
               type="button"
@@ -408,7 +420,18 @@ export default function Home() {
                   : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              Interview Q&A
+              Q&A
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("sql")}
+              className={`py-1 rounded-md text-xs transition-all cursor-pointer ${
+                mode === "sql"
+                  ? "bg-zinc-100 text-zinc-950 font-semibold shadow-sm"
+                  : "text-zinc-400 hover:text-zinc-200"
+              }`}
+            >
+              SQL Lab
             </button>
           </div>
         </div>
@@ -428,6 +451,8 @@ export default function Home() {
       <main className="flex-1 max-w-4xl w-full mx-auto px-3.5 sm:px-4 py-4 sm:py-6 flex flex-col justify-between safe-pb">
         {mode === "interview" ? (
           <InterviewQA />
+        ) : mode === "sql" ? (
+          <SqlLab />
         ) : (
           <>
             {/* Topic Selector - Horizontal swipe chips on Android & mobile */}
