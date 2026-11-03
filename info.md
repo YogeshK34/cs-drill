@@ -96,10 +96,12 @@ cs-drill/
 │   │       └── sessions/route.ts # GET/POST: Question attempt & reveal progress
 │   ├── favicon.ico              # Browser icon
 │   ├── globals.css              # Dark theme tokens, touch manipulation, scrollbar styling
-│   ├── layout.tsx               # Root layout, Geist font loader, mobile viewport & PWA meta
+│   ├── layout.tsx               # Root layout, Geist font loader, mobile viewport & OpenGraph/Twitter metadata
 │   ├── login/page.tsx           # Authentication login page
 │   ├── notes/page.tsx           # Revision notes client interface
+│   ├── opengraph-image.tsx      # Dynamic OpenGraph preview card (1200x630, edge-compatible Next.js OG)
 │   ├── register/page.tsx        # User registration page
+│   ├── twitter-image.tsx        # Dedicated Twitter/X card preview image (1200x630)
 │   └── page.tsx                 # Core page with Mode Toggle (MCQ Drill vs Interview Q&A vs SQL Lab)
 ├── components/
 │   ├── InterviewQA.tsx          # Interview Q&A flashcard reader with search & topic filter
@@ -223,6 +225,16 @@ Defines the strict contracts used throughout the app:
 - Injects Geist and Geist Mono variables into the root HTML element.
 - Exports a separate `Viewport` configuration (`width=device-width`, `initialScale=1`, `maximumScale=1`, `viewportFit=cover`, `themeColor="#09090b"`).
 - Sets up mobile web app compatibility metadata (`mobile-web-app-capable: yes`, `statusBarStyle: black-translucent`).
+- Configures global OpenGraph (`og:title`, `og:description`, `og:url`, `og:site_name`, `og:type: website`, `og:image`) and Twitter Card (`summary_large_image`) metadata resolved via `NEXT_PUBLIC_APP_URL`.
+
+#### `app/opengraph-image.tsx` & `app/twitter-image.tsx`
+- Programmatic dynamic OpenGraph and Twitter card image generators powered by Next.js `ImageResponse` from `next/og`.
+- **Dimensions**: Standard 1200×630px social card.
+- **Visual Design**:
+  - Background: `#09090b` dark tone (Zinc-950) with no borders or drop shadows.
+  - Header: Large monospace `cs/drill` branding in `#58a6ff` blue.
+  - Tagline: `CS Fundamentals MCQ Prep` in zinc-400 (`#a1a1aa`).
+  - Topic Pills: Horizontal array of discrete rounded pills (`OS`, `Networks`, `DBMS`, `OOP`, `DSA Theory`, `SQL Lab`) in zinc-600 (`#52525b`) on subtle zinc-900 badges.
 
 ---
 

@@ -12,9 +12,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://cs-drill.vercel.app";
+
 export const metadata: Metadata = {
-  title: "cs-drill | CS Fundamentals MCQ Prep",
-  description: "Fast-paced CS fundamentals MCQ prep tool for OS, Networks, DBMS, OOP, and DSA Theory.",
+  metadataBase: new URL(appUrl),
+  title: "CS Drill",
+  description: "CS Fundamentals MCQ Prep for SDE & SWE interviews",
+  openGraph: {
+    title: "CS Drill",
+    description: "CS Fundamentals MCQ Prep for SDE & SWE interviews",
+    type: "website",
+    url: appUrl,
+    siteName: appUrl,
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "CS Drill",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CS Drill",
+    description: "CS Fundamentals MCQ Prep for SDE & SWE interviews",
+    images: [
+      {
+        url: "/twitter-image",
+        width: 1200,
+        height: 630,
+        alt: "CS Drill",
+      },
+    ],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
