@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS sql_lab.progress (
   user_id      INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   question_id  INTEGER NOT NULL,
   revealed     BOOLEAN NOT NULL DEFAULT FALSE,
+  solved       BOOLEAN NOT NULL DEFAULT FALSE,
   attempted_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
   UNIQUE (user_id, question_id)
 );

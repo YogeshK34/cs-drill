@@ -7,6 +7,7 @@ import {
   SQLQuestion,
   getQuestionsByLevel,
 } from "@/lib/sql-questions";
+import { ValidationResult } from "@/lib/sql-validator";
 
 interface TableData {
   columns: string[];
@@ -20,10 +21,16 @@ interface QueryResult {
   rowCount?: number;
   error?: string;
   isTruncated?: boolean;
+  validation?: ValidationResult | null;
+  expected?: {
+    columns: string[];
+    rows: (string | number | boolean | null)[][];
+  } | null;
 }
 
 interface ProgressItem {
   revealed: boolean;
+  solved?: boolean;
   attemptedAt?: string;
 }
 
@@ -37,6 +44,7 @@ export default function SqlLab() {
   const [userQuery, setUserQuery] = useState<string>("");
   const [running, setRunning] = useState<boolean>(false);
   const [output, setOutput] = useState<QueryResult | null>(null);
+  const [outputTab, setOutputTab] = useState<"actual" | "expected">("actual");
 
   // Table viewer state
   const [tablesData, setTablesData] = useState<Record<string, TableData>>({});
@@ -101,6 +109,7 @@ export default function SqlLab() {
     setShowHint(false);
     setShowAnswer(false);
     setOutput(null);
+    setOutputTab("actual");
     setUserQuery("");
     const targetQuestions = getQuestionsByLevel(targetLevel);
     const targetQ = targetQuestions[targetIndex] || targetQuestions[0];
@@ -121,7 +130,10 @@ export default function SqlLab() {
       const res = await fetch("/api/sql-lab/run", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: trimmed }),
+        body: JSON.stringify({
+          query: trimmed,
+          questionId: currentQuestion?.id,
+        }),
       });
 
       const data = await res.json();
@@ -133,25 +145,34 @@ export default function SqlLab() {
           error: data.error || `Execution failed with status ${res.status}`,
         });
       } else {
+        const isSolved = Boolean(data.validation?.isCorrect);
         setOutput({
           columns: data.columns || [],
           rows: data.rows || [],
           rowCount: data.rowCount ?? data.rows?.length ?? 0,
           isTruncated: data.isTruncated,
+          validation: data.validation || null,
+          expected: data.expected || null,
         });
+        setOutputTab("actual");
 
-        // Mark question as attempted in progress
+        // Mark question as attempted/solved in progress
         if (currentQuestion) {
           fetch("/api/sql-lab/sessions", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ questionId: currentQuestion.id, revealed: false }),
+            body: JSON.stringify({
+              questionId: currentQuestion.id,
+              revealed: false,
+              solved: isSolved,
+            }),
           }).catch(() => {});
 
           setProgress((prev) => ({
             ...prev,
             [currentQuestion.id]: {
               revealed: prev[currentQuestion.id]?.revealed || false,
+              solved: isSolved || prev[currentQuestion.id]?.solved || false,
               attemptedAt: new Date().toISOString(),
             },
           }));
@@ -232,6 +253,7 @@ export default function SqlLab() {
   };
 
   const currentTableData = tablesData[activeTable];
+  const isQuestionSolved = currentQuestion && progress[currentQuestion.id]?.solved;
   const isQuestionRevealed = currentQuestion && progress[currentQuestion.id]?.revealed;
   const isQuestionAttempted = currentQuestion && !!progress[currentQuestion.id];
 
@@ -281,7 +303,12 @@ export default function SqlLab() {
             <span className="font-mono text-[11px] sm:text-xs text-zinc-400">
               QUESTION {questionIndex + 1} OF {levelQuestions.length}
             </span>
-            {isQuestionRevealed ? (
+            {isQuestionSolved ? (
+              <span className="font-mono text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center gap-1 shadow-xs">
+                <span>SOLVED</span>
+                <span>✓</span>
+              </span>
+            ) : isQuestionRevealed ? (
               <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-amber-500/10 border border-amber-500/30 text-amber-400">
                 REVEALED
               </span>
@@ -534,17 +561,87 @@ export default function SqlLab() {
 
       {/* 5. OUTPUT PANEL */}
       <section className="bg-zinc-900/60 border border-zinc-800/80 rounded-2xl overflow-hidden backdrop-blur-sm">
-        <div className="px-4 py-2.5 bg-zinc-950/90 border-b border-zinc-800/80 flex items-center justify-between">
-          <span className="font-mono text-xs font-semibold uppercase text-zinc-400">
-            QUERY OUTPUT
-          </span>
-          {output && !output.error && (
-            <span className="font-mono text-xs text-emerald-400 font-semibold">
-              {output.rowCount} {output.rowCount === 1 ? "row" : "rows"} returned
-              {output.isTruncated && " (capped at 100)"}
+        <div className="px-4 py-2.5 bg-zinc-950/90 border-b border-zinc-800/80 flex items-center justify-between flex-wrap gap-2">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-xs font-semibold uppercase text-zinc-400">
+              QUERY OUTPUT
             </span>
+            {output && !output.error && (
+              <span className="font-mono text-xs text-zinc-500">
+                &bull; {output.rowCount} {output.rowCount === 1 ? "row" : "rows"}
+                {output.isTruncated && " (capped at 100)"}
+              </span>
+            )}
+          </div>
+
+          {/* Your Output vs Expected Output tab switcher */}
+          {output && !output.error && output.expected && (
+            <div className="flex items-center gap-1 bg-zinc-900/90 p-0.5 rounded-lg border border-zinc-800 text-xs font-mono">
+              <button
+                type="button"
+                onClick={() => setOutputTab("actual")}
+                className={`px-3 py-1 rounded-md transition cursor-pointer text-xs font-mono ${
+                  outputTab === "actual"
+                    ? "bg-zinc-800 text-white font-semibold shadow-xs"
+                    : "text-zinc-400 hover:text-zinc-200"
+                }`}
+              >
+                Your Output ({output.rowCount ?? output.rows.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setOutputTab("expected")}
+                className={`px-3 py-1 rounded-md transition cursor-pointer text-xs font-mono flex items-center gap-1.5 ${
+                  outputTab === "expected"
+                    ? "bg-zinc-800 text-emerald-400 font-semibold shadow-xs"
+                    : "text-zinc-400 hover:text-zinc-200"
+                }`}
+              >
+                <span>Expected Output</span>
+                <span className="text-[11px] text-zinc-500 font-normal">
+                  ({output.expected.rows.length})
+                </span>
+              </button>
+            </div>
           )}
         </div>
+
+        {/* Validation Banner (Success / Mismatch) */}
+        {output && !output.error && output.validation && (
+          output.validation.isCorrect ? (
+            <div className="px-4 py-3 bg-emerald-950/40 border-b border-emerald-500/30 flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2 font-mono text-xs sm:text-sm text-emerald-400">
+                <span className="text-base select-none">🎉</span>
+                <span className="font-bold">PASSED:</span>
+                <span className="text-emerald-300">{output.validation.message}</span>
+              </div>
+              <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider font-semibold">
+                SOLVED ✓
+              </span>
+            </div>
+          ) : (
+            <div className="px-4 py-3 bg-amber-950/40 border-b border-amber-500/30 flex items-start gap-2.5 font-mono text-xs text-amber-300">
+              <span className="text-base select-none leading-none pt-0.5">⚠️</span>
+              <div className="flex-1">
+                <div className="font-bold text-amber-400 mb-0.5">OUTPUT MISMATCH:</div>
+                <div>{output.validation.message}</div>
+                {output.expected && (
+                  <div className="text-[11px] text-amber-400/80 mt-1">
+                    Compare your results with the{" "}
+                    <button
+                      type="button"
+                      onClick={() => setOutputTab("expected")}
+                      className="underline font-bold hover:text-amber-200 cursor-pointer"
+                    >
+                      Expected Output tab
+                    </button>{" "}
+                    above.
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        )}
 
         <div className="p-0">
           {!output ? (
@@ -555,48 +652,73 @@ export default function SqlLab() {
             <div className="p-4 sm:p-5 bg-rose-950/20 border-b border-rose-900/30 font-mono text-xs text-rose-400 leading-relaxed whitespace-pre-wrap">
               {output.error}
             </div>
-          ) : output.rows.length === 0 ? (
-            <div className="p-6 font-mono text-xs text-zinc-500">
-              Query executed successfully &bull; 0 rows returned
-            </div>
           ) : (
-            <div className="max-h-64 overflow-x-auto overflow-y-auto">
-              <table className="w-full text-left border-collapse text-xs font-mono">
-                <thead className="sticky top-0 bg-zinc-950 border-b border-zinc-800 text-zinc-500 select-none uppercase tracking-wider">
-                  <tr>
-                    {output.columns.map((col, idx) => (
-                      <th
-                        key={idx}
-                        className="px-3.5 py-2 font-semibold whitespace-nowrap"
-                      >
-                        {col}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-850">
-                  {output.rows.map((row, rIdx) => (
-                    <tr
-                      key={rIdx}
-                      className={`hover:bg-zinc-800/50 transition-colors ${
-                        rIdx % 2 === 0 ? "bg-zinc-900/40" : "bg-zinc-900/10"
-                      }`}
-                    >
-                      {row.map((val, cIdx) => (
-                        <td
-                          key={cIdx}
-                          className={`px-3.5 py-1.5 whitespace-nowrap text-white ${
-                            val === null ? "text-zinc-600 italic" : ""
-                          }`}
-                        >
-                          {val === null ? "null" : String(val)}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            (() => {
+              const displayColumns =
+                outputTab === "expected" && output.expected
+                  ? output.expected.columns
+                  : output.columns;
+              const displayRows =
+                outputTab === "expected" && output.expected
+                  ? output.expected.rows
+                  : output.rows;
+
+              if (displayRows.length === 0) {
+                return (
+                  <div className="p-6 font-mono text-xs text-zinc-500">
+                    Query executed successfully &bull; 0 rows returned
+                  </div>
+                );
+              }
+
+              return (
+                <div>
+                  {outputTab === "expected" && output.expected && (
+                    <div className="px-4 py-1.5 bg-emerald-950/20 border-b border-zinc-800/60 font-mono text-[11px] text-emerald-400/90 flex items-center gap-1.5">
+                      <span>💡</span>
+                      <span>Showing canonical expected result ({displayRows.length} rows)</span>
+                    </div>
+                  )}
+                  <div className="max-h-64 overflow-x-auto overflow-y-auto">
+                    <table className="w-full text-left border-collapse text-xs font-mono">
+                      <thead className="sticky top-0 bg-zinc-950 border-b border-zinc-800 text-zinc-500 select-none uppercase tracking-wider">
+                        <tr>
+                          {displayColumns.map((col, idx) => (
+                            <th
+                              key={idx}
+                              className="px-3.5 py-2 font-semibold whitespace-nowrap"
+                            >
+                              {col}
+                            </th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-zinc-850">
+                        {displayRows.map((row, rIdx) => (
+                          <tr
+                            key={rIdx}
+                            className={`hover:bg-zinc-800/50 transition-colors ${
+                              rIdx % 2 === 0 ? "bg-zinc-900/40" : "bg-zinc-900/10"
+                            }`}
+                          >
+                            {row.map((val, cIdx) => (
+                              <td
+                                key={cIdx}
+                                className={`px-3.5 py-1.5 whitespace-nowrap text-white ${
+                                  val === null ? "text-zinc-600 italic" : ""
+                                }`}
+                              >
+                                {val === null ? "null" : String(val)}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              );
+            })()
           )}
         </div>
       </section>

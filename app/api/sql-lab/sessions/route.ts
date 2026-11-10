@@ -13,16 +13,17 @@ export async function GET() {
   try {
     const pool = getPool();
     const { rows } = await pool.query(
-      `SELECT question_id, revealed, attempted_at 
+      `SELECT question_id, revealed, solved, attempted_at 
        FROM sql_lab.progress 
        WHERE user_id = $1`,
       [session.userId]
     );
 
-    const progress: Record<number, { revealed: boolean; attemptedAt: string }> = {};
+    const progress: Record<number, { revealed: boolean; solved: boolean; attemptedAt: string }> = {};
     for (const r of rows) {
       progress[r.question_id] = {
         revealed: r.revealed,
+        solved: Boolean(r.solved),
         attemptedAt: r.attempted_at,
       };
     }
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const questionId = Number(body?.questionId);
     const revealed = Boolean(body?.revealed);
+    const solved = Boolean(body?.solved);
 
     if (!questionId || isNaN(questionId)) {
       return NextResponse.json(
@@ -58,13 +60,14 @@ export async function POST(request: NextRequest) {
 
     const pool = getPool();
     await pool.query(
-      `INSERT INTO sql_lab.progress (user_id, question_id, revealed, attempted_at)
-       VALUES ($1, $2, $3, NOW())
+      `INSERT INTO sql_lab.progress (user_id, question_id, revealed, solved, attempted_at)
+       VALUES ($1, $2, $3, $4, NOW())
        ON CONFLICT (user_id, question_id)
        DO UPDATE SET
          revealed = CASE WHEN EXCLUDED.revealed = TRUE THEN TRUE ELSE sql_lab.progress.revealed END,
+         solved = CASE WHEN EXCLUDED.solved = TRUE THEN TRUE ELSE sql_lab.progress.solved END,
          attempted_at = NOW()`,
-      [session.userId, questionId, revealed]
+      [session.userId, questionId, revealed, solved]
     );
 
     return NextResponse.json({ success: true });

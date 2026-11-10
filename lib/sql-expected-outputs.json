@@ -1,0 +1,4149 @@
+{
+  "1": {
+    "columns": [
+      "id",
+      "name",
+      "department",
+      "salary",
+      "manager_id",
+      "joined_on"
+    ],
+    "rows": [
+      [
+        1,
+        "Alice Johnson",
+        "Engineering",
+        120000,
+        null,
+        "2021-03-14"
+      ],
+      [
+        2,
+        "Bob Smith",
+        "Engineering",
+        95000,
+        1,
+        "2021-05-31"
+      ],
+      [
+        3,
+        "Charlie Brown",
+        "Engineering",
+        82000,
+        1,
+        "2022-01-09"
+      ],
+      [
+        4,
+        "Diana Prince",
+        "Engineering",
+        105000,
+        1,
+        "2021-09-19"
+      ],
+      [
+        5,
+        "Evan Wright",
+        "Engineering",
+        72000,
+        2,
+        "2023-04-11"
+      ],
+      [
+        6,
+        "Fiona Gallagher",
+        "Marketing",
+        88000,
+        null,
+        "2020-11-04"
+      ],
+      [
+        7,
+        "George Clark",
+        "Marketing",
+        62000,
+        6,
+        "2022-08-14"
+      ],
+      [
+        8,
+        "Hannah Abbott",
+        "Marketing",
+        58000,
+        6,
+        "2023-01-31"
+      ],
+      [
+        9,
+        "Ian Malcolm",
+        "Sales",
+        92000,
+        null,
+        "2020-05-17"
+      ],
+      [
+        10,
+        "Julia Roberts",
+        "Sales",
+        75000,
+        9,
+        "2021-10-10"
+      ],
+      [
+        11,
+        "Kevin Bacon",
+        "Sales",
+        68000,
+        9,
+        "2022-11-30"
+      ],
+      [
+        12,
+        "Laura Croft",
+        "Sales",
+        81000,
+        9,
+        "2021-04-21"
+      ],
+      [
+        13,
+        "Michael Scott",
+        "HR",
+        70000,
+        null,
+        "2019-01-14"
+      ],
+      [
+        14,
+        "Nina Simone",
+        "HR",
+        52000,
+        13,
+        "2023-05-09"
+      ],
+      [
+        15,
+        "Oscar Martinez",
+        "Finance",
+        98000,
+        null,
+        "2019-08-19"
+      ],
+      [
+        16,
+        "Pam Beesly",
+        "Finance",
+        65000,
+        15,
+        "2022-03-13"
+      ],
+      [
+        17,
+        "Quentin Tarantino",
+        "Engineering",
+        115000,
+        1,
+        "2020-01-31"
+      ],
+      [
+        18,
+        "Rachel Green",
+        "Marketing",
+        64000,
+        6,
+        "2023-06-30"
+      ]
+    ]
+  },
+  "2": {
+    "columns": [
+      "name",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        120000
+      ],
+      [
+        "Bob Smith",
+        95000
+      ],
+      [
+        "Charlie Brown",
+        82000
+      ],
+      [
+        "Diana Prince",
+        105000
+      ],
+      [
+        "Evan Wright",
+        72000
+      ],
+      [
+        "Fiona Gallagher",
+        88000
+      ],
+      [
+        "George Clark",
+        62000
+      ],
+      [
+        "Hannah Abbott",
+        58000
+      ],
+      [
+        "Ian Malcolm",
+        92000
+      ],
+      [
+        "Julia Roberts",
+        75000
+      ],
+      [
+        "Kevin Bacon",
+        68000
+      ],
+      [
+        "Laura Croft",
+        81000
+      ],
+      [
+        "Michael Scott",
+        70000
+      ],
+      [
+        "Nina Simone",
+        52000
+      ],
+      [
+        "Oscar Martinez",
+        98000
+      ],
+      [
+        "Pam Beesly",
+        65000
+      ],
+      [
+        "Quentin Tarantino",
+        115000
+      ],
+      [
+        "Rachel Green",
+        64000
+      ]
+    ]
+  },
+  "3": {
+    "columns": [
+      "name",
+      "budget"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        850000
+      ],
+      [
+        "Marketing",
+        350000
+      ],
+      [
+        "Sales",
+        500000
+      ],
+      [
+        "HR",
+        200000
+      ],
+      [
+        "Finance",
+        400000
+      ]
+    ]
+  },
+  "4": {
+    "columns": [
+      "employee_name",
+      "annual_compensation"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        120000
+      ],
+      [
+        "Bob Smith",
+        95000
+      ],
+      [
+        "Charlie Brown",
+        82000
+      ],
+      [
+        "Diana Prince",
+        105000
+      ],
+      [
+        "Evan Wright",
+        72000
+      ],
+      [
+        "Fiona Gallagher",
+        88000
+      ],
+      [
+        "George Clark",
+        62000
+      ],
+      [
+        "Hannah Abbott",
+        58000
+      ],
+      [
+        "Ian Malcolm",
+        92000
+      ],
+      [
+        "Julia Roberts",
+        75000
+      ],
+      [
+        "Kevin Bacon",
+        68000
+      ],
+      [
+        "Laura Croft",
+        81000
+      ],
+      [
+        "Michael Scott",
+        70000
+      ],
+      [
+        "Nina Simone",
+        52000
+      ],
+      [
+        "Oscar Martinez",
+        98000
+      ],
+      [
+        "Pam Beesly",
+        65000
+      ],
+      [
+        "Quentin Tarantino",
+        115000
+      ],
+      [
+        "Rachel Green",
+        64000
+      ]
+    ]
+  },
+  "5": {
+    "columns": [
+      "title",
+      "department",
+      "deadline"
+    ],
+    "rows": [
+      [
+        "Cloud Migration",
+        "Engineering",
+        "2026-12-30"
+      ],
+      [
+        "AI Chatbot",
+        "Engineering",
+        "2026-10-14"
+      ],
+      [
+        "Security Audit",
+        "Engineering",
+        "2026-02-28"
+      ],
+      [
+        "Brand Redesign",
+        "Marketing",
+        "2026-02-14"
+      ],
+      [
+        "Q3 Ad Campaign",
+        "Marketing",
+        "2026-09-29"
+      ],
+      [
+        "SEO Optimization",
+        "Marketing",
+        "2026-10-31"
+      ],
+      [
+        "Enterprise CRM",
+        "Sales",
+        "2026-11-29"
+      ],
+      [
+        "Global Expansion",
+        "Sales",
+        "2027-01-30"
+      ],
+      [
+        "Lead Scoring",
+        "Sales",
+        "2026-01-19"
+      ],
+      [
+        "Employee Wellness",
+        "HR",
+        "2026-10-30"
+      ],
+      [
+        "Payroll Upgrade",
+        "HR",
+        "2026-04-14"
+      ],
+      [
+        "ERP Modernization",
+        "Finance",
+        "2026-12-14"
+      ],
+      [
+        "Tax Automation",
+        "Finance",
+        "2026-05-29"
+      ],
+      [
+        "Mobile App Revamp",
+        "Engineering",
+        "2026-11-14"
+      ],
+      [
+        "Data Lakehouse",
+        "Engineering",
+        "2027-03-30"
+      ]
+    ]
+  },
+  "6": {
+    "columns": [
+      "id",
+      "product",
+      "quantity",
+      "amount"
+    ],
+    "rows": [
+      [
+        1,
+        "Laptop Pro",
+        1,
+        2400
+      ],
+      [
+        2,
+        "4K Monitor",
+        2,
+        800
+      ],
+      [
+        3,
+        "Mechanical Keyboard",
+        1,
+        150
+      ],
+      [
+        4,
+        "Ergonomic Chair",
+        1,
+        450
+      ],
+      [
+        5,
+        "Noise-Cancelling Headphones",
+        1,
+        300
+      ],
+      [
+        6,
+        "Laptop Pro",
+        1,
+        2400
+      ],
+      [
+        7,
+        "Webcam HD",
+        2,
+        180
+      ],
+      [
+        8,
+        "Standing Desk",
+        1,
+        650
+      ],
+      [
+        9,
+        "Laptop Pro",
+        1,
+        2400
+      ],
+      [
+        10,
+        "USB-C Dock",
+        2,
+        320
+      ],
+      [
+        11,
+        "4K Monitor",
+        1,
+        400
+      ],
+      [
+        12,
+        "Ergonomic Chair",
+        1,
+        450
+      ],
+      [
+        13,
+        "Noise-Cancelling Headphones",
+        1,
+        300
+      ],
+      [
+        14,
+        "Mechanical Keyboard",
+        1,
+        150
+      ],
+      [
+        15,
+        "Standing Desk",
+        1,
+        650
+      ],
+      [
+        16,
+        "Laptop Pro",
+        1,
+        2400
+      ],
+      [
+        17,
+        "4K Monitor",
+        2,
+        800
+      ],
+      [
+        18,
+        "USB-C Dock",
+        1,
+        160
+      ],
+      [
+        19,
+        "Noise-Cancelling Headphones",
+        1,
+        300
+      ],
+      [
+        20,
+        "Standing Desk",
+        1,
+        650
+      ]
+    ]
+  },
+  "7": {
+    "columns": [
+      "emp_id",
+      "full_name",
+      "hire_date"
+    ],
+    "rows": [
+      [
+        1,
+        "Alice Johnson",
+        "2021-03-14"
+      ],
+      [
+        2,
+        "Bob Smith",
+        "2021-05-31"
+      ],
+      [
+        3,
+        "Charlie Brown",
+        "2022-01-09"
+      ],
+      [
+        4,
+        "Diana Prince",
+        "2021-09-19"
+      ],
+      [
+        5,
+        "Evan Wright",
+        "2023-04-11"
+      ],
+      [
+        6,
+        "Fiona Gallagher",
+        "2020-11-04"
+      ],
+      [
+        7,
+        "George Clark",
+        "2022-08-14"
+      ],
+      [
+        8,
+        "Hannah Abbott",
+        "2023-01-31"
+      ],
+      [
+        9,
+        "Ian Malcolm",
+        "2020-05-17"
+      ],
+      [
+        10,
+        "Julia Roberts",
+        "2021-10-10"
+      ],
+      [
+        11,
+        "Kevin Bacon",
+        "2022-11-30"
+      ],
+      [
+        12,
+        "Laura Croft",
+        "2021-04-21"
+      ],
+      [
+        13,
+        "Michael Scott",
+        "2019-01-14"
+      ],
+      [
+        14,
+        "Nina Simone",
+        "2023-05-09"
+      ],
+      [
+        15,
+        "Oscar Martinez",
+        "2019-08-19"
+      ],
+      [
+        16,
+        "Pam Beesly",
+        "2022-03-13"
+      ],
+      [
+        17,
+        "Quentin Tarantino",
+        "2020-01-31"
+      ],
+      [
+        18,
+        "Rachel Green",
+        "2023-06-30"
+      ]
+    ]
+  },
+  "8": {
+    "columns": [
+      "employee_id",
+      "role",
+      "hours"
+    ],
+    "rows": [
+      [
+        1,
+        "Lead Architect",
+        35
+      ],
+      [
+        2,
+        "DevOps Engineer",
+        40
+      ],
+      [
+        4,
+        "ML Specialist",
+        38
+      ],
+      [
+        5,
+        "Junior Dev",
+        30
+      ],
+      [
+        3,
+        "Security Analyst",
+        25
+      ],
+      [
+        17,
+        "Senior Auditor",
+        30
+      ],
+      [
+        6,
+        "Creative Director",
+        20
+      ],
+      [
+        7,
+        "Content Strategist",
+        40
+      ],
+      [
+        8,
+        "Social Media Lead",
+        35
+      ],
+      [
+        18,
+        "SEO Specialist",
+        25
+      ],
+      [
+        9,
+        "Sales Director",
+        15
+      ],
+      [
+        10,
+        "CRM Admin",
+        40
+      ],
+      [
+        11,
+        "Account Exec",
+        30
+      ],
+      [
+        12,
+        "Data Analyst",
+        35
+      ],
+      [
+        13,
+        "HR Coordinator",
+        20
+      ],
+      [
+        14,
+        "Payroll Analyst",
+        30
+      ],
+      [
+        15,
+        "Finance Lead",
+        25
+      ],
+      [
+        16,
+        "Tax Accountant",
+        35
+      ],
+      [
+        2,
+        "Mobile Engineer",
+        35
+      ],
+      [
+        17,
+        "Data Engineer",
+        40
+      ]
+    ]
+  },
+  "9": {
+    "columns": [
+      "department"
+    ],
+    "rows": [
+      [
+        "Marketing"
+      ],
+      [
+        "Finance"
+      ],
+      [
+        "Engineering"
+      ],
+      [
+        "Sales"
+      ],
+      [
+        "HR"
+      ]
+    ]
+  },
+  "10": {
+    "columns": [
+      "product"
+    ],
+    "rows": [
+      [
+        "Noise-Cancelling Headphones"
+      ],
+      [
+        "Mechanical Keyboard"
+      ],
+      [
+        "USB-C Dock"
+      ],
+      [
+        "Standing Desk"
+      ],
+      [
+        "Webcam HD"
+      ],
+      [
+        "4K Monitor"
+      ],
+      [
+        "Ergonomic Chair"
+      ],
+      [
+        "Laptop Pro"
+      ]
+    ]
+  },
+  "11": {
+    "columns": [
+      "name",
+      "department"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering"
+      ],
+      [
+        "Bob Smith",
+        "Engineering"
+      ],
+      [
+        "Charlie Brown",
+        "Engineering"
+      ],
+      [
+        "Diana Prince",
+        "Engineering"
+      ],
+      [
+        "Evan Wright",
+        "Engineering"
+      ]
+    ]
+  },
+  "12": {
+    "columns": [
+      "name",
+      "salary",
+      "monthly_pay"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        120000,
+        10000
+      ],
+      [
+        "Bob Smith",
+        95000,
+        7916
+      ],
+      [
+        "Charlie Brown",
+        82000,
+        6833
+      ],
+      [
+        "Diana Prince",
+        105000,
+        8750
+      ],
+      [
+        "Evan Wright",
+        72000,
+        6000
+      ],
+      [
+        "Fiona Gallagher",
+        88000,
+        7333
+      ],
+      [
+        "George Clark",
+        62000,
+        5166
+      ],
+      [
+        "Hannah Abbott",
+        58000,
+        4833
+      ],
+      [
+        "Ian Malcolm",
+        92000,
+        7666
+      ],
+      [
+        "Julia Roberts",
+        75000,
+        6250
+      ],
+      [
+        "Kevin Bacon",
+        68000,
+        5666
+      ],
+      [
+        "Laura Croft",
+        81000,
+        6750
+      ],
+      [
+        "Michael Scott",
+        70000,
+        5833
+      ],
+      [
+        "Nina Simone",
+        52000,
+        4333
+      ],
+      [
+        "Oscar Martinez",
+        98000,
+        8166
+      ],
+      [
+        "Pam Beesly",
+        65000,
+        5416
+      ],
+      [
+        "Quentin Tarantino",
+        115000,
+        9583
+      ],
+      [
+        "Rachel Green",
+        64000,
+        5333
+      ]
+    ]
+  },
+  "13": {
+    "columns": [
+      "id",
+      "product",
+      "quantity",
+      "amount",
+      "total_value"
+    ],
+    "rows": [
+      [
+        1,
+        "Laptop Pro",
+        1,
+        2400,
+        2400
+      ],
+      [
+        2,
+        "4K Monitor",
+        2,
+        800,
+        1600
+      ],
+      [
+        3,
+        "Mechanical Keyboard",
+        1,
+        150,
+        150
+      ],
+      [
+        4,
+        "Ergonomic Chair",
+        1,
+        450,
+        450
+      ],
+      [
+        5,
+        "Noise-Cancelling Headphones",
+        1,
+        300,
+        300
+      ],
+      [
+        6,
+        "Laptop Pro",
+        1,
+        2400,
+        2400
+      ],
+      [
+        7,
+        "Webcam HD",
+        2,
+        180,
+        360
+      ],
+      [
+        8,
+        "Standing Desk",
+        1,
+        650,
+        650
+      ],
+      [
+        9,
+        "Laptop Pro",
+        1,
+        2400,
+        2400
+      ],
+      [
+        10,
+        "USB-C Dock",
+        2,
+        320,
+        640
+      ],
+      [
+        11,
+        "4K Monitor",
+        1,
+        400,
+        400
+      ],
+      [
+        12,
+        "Ergonomic Chair",
+        1,
+        450,
+        450
+      ],
+      [
+        13,
+        "Noise-Cancelling Headphones",
+        1,
+        300,
+        300
+      ],
+      [
+        14,
+        "Mechanical Keyboard",
+        1,
+        150,
+        150
+      ],
+      [
+        15,
+        "Standing Desk",
+        1,
+        650,
+        650
+      ],
+      [
+        16,
+        "Laptop Pro",
+        1,
+        2400,
+        2400
+      ],
+      [
+        17,
+        "4K Monitor",
+        2,
+        800,
+        1600
+      ],
+      [
+        18,
+        "USB-C Dock",
+        1,
+        160,
+        160
+      ],
+      [
+        19,
+        "Noise-Cancelling Headphones",
+        1,
+        300,
+        300
+      ],
+      [
+        20,
+        "Standing Desk",
+        1,
+        650,
+        650
+      ]
+    ]
+  },
+  "14": {
+    "columns": [
+      "status"
+    ],
+    "rows": [
+      [
+        "on_hold"
+      ],
+      [
+        "active"
+      ],
+      [
+        "completed"
+      ]
+    ]
+  },
+  "15": {
+    "columns": [
+      "name",
+      "weekly_pay"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        2307
+      ],
+      [
+        "Bob Smith",
+        1826
+      ],
+      [
+        "Charlie Brown",
+        1576
+      ],
+      [
+        "Diana Prince",
+        2019
+      ],
+      [
+        "Evan Wright",
+        1384
+      ],
+      [
+        "Fiona Gallagher",
+        1692
+      ],
+      [
+        "George Clark",
+        1192
+      ],
+      [
+        "Hannah Abbott",
+        1115
+      ],
+      [
+        "Ian Malcolm",
+        1769
+      ],
+      [
+        "Julia Roberts",
+        1442
+      ],
+      [
+        "Kevin Bacon",
+        1307
+      ],
+      [
+        "Laura Croft",
+        1557
+      ],
+      [
+        "Michael Scott",
+        1346
+      ],
+      [
+        "Nina Simone",
+        1000
+      ],
+      [
+        "Oscar Martinez",
+        1884
+      ],
+      [
+        "Pam Beesly",
+        1250
+      ],
+      [
+        "Quentin Tarantino",
+        2211
+      ],
+      [
+        "Rachel Green",
+        1230
+      ]
+    ]
+  },
+  "16": {
+    "columns": [
+      "id",
+      "product",
+      "amount"
+    ],
+    "rows": [
+      [
+        1,
+        "Laptop Pro",
+        2400
+      ],
+      [
+        2,
+        "4K Monitor",
+        800
+      ],
+      [
+        3,
+        "Mechanical Keyboard",
+        150
+      ]
+    ]
+  },
+  "17": {
+    "columns": [
+      "id",
+      "name",
+      "department",
+      "salary",
+      "manager_id",
+      "joined_on"
+    ],
+    "rows": [
+      [
+        1,
+        "Alice Johnson",
+        "Engineering",
+        120000,
+        null,
+        "2021-03-14"
+      ],
+      [
+        2,
+        "Bob Smith",
+        "Engineering",
+        95000,
+        1,
+        "2021-05-31"
+      ],
+      [
+        3,
+        "Charlie Brown",
+        "Engineering",
+        82000,
+        1,
+        "2022-01-09"
+      ],
+      [
+        4,
+        "Diana Prince",
+        "Engineering",
+        105000,
+        1,
+        "2021-09-19"
+      ],
+      [
+        17,
+        "Quentin Tarantino",
+        "Engineering",
+        115000,
+        1,
+        "2020-01-31"
+      ]
+    ]
+  },
+  "18": {
+    "columns": [
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        88000
+      ],
+      [
+        "George Clark",
+        "Marketing",
+        62000
+      ],
+      [
+        "Hannah Abbott",
+        "Marketing",
+        58000
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        92000
+      ],
+      [
+        "Julia Roberts",
+        "Sales",
+        75000
+      ],
+      [
+        "Kevin Bacon",
+        "Sales",
+        68000
+      ],
+      [
+        "Laura Croft",
+        "Sales",
+        81000
+      ],
+      [
+        "Rachel Green",
+        "Marketing",
+        64000
+      ]
+    ]
+  },
+  "19": {
+    "columns": [
+      "name",
+      "salary",
+      "department"
+    ],
+    "rows": [
+      [
+        "Bob Smith",
+        95000,
+        "Engineering"
+      ],
+      [
+        "Charlie Brown",
+        82000,
+        "Engineering"
+      ],
+      [
+        "Evan Wright",
+        72000,
+        "Engineering"
+      ],
+      [
+        "Fiona Gallagher",
+        88000,
+        "Marketing"
+      ],
+      [
+        "Ian Malcolm",
+        92000,
+        "Sales"
+      ],
+      [
+        "Julia Roberts",
+        75000,
+        "Sales"
+      ],
+      [
+        "Laura Croft",
+        81000,
+        "Sales"
+      ],
+      [
+        "Michael Scott",
+        70000,
+        "HR"
+      ],
+      [
+        "Oscar Martinez",
+        98000,
+        "Finance"
+      ]
+    ]
+  },
+  "20": {
+    "columns": [
+      "id",
+      "name",
+      "department",
+      "salary",
+      "manager_id",
+      "joined_on"
+    ],
+    "rows": [
+      [
+        1,
+        "Alice Johnson",
+        "Engineering",
+        120000,
+        null,
+        "2021-03-14"
+      ],
+      [
+        6,
+        "Fiona Gallagher",
+        "Marketing",
+        88000,
+        null,
+        "2020-11-04"
+      ],
+      [
+        9,
+        "Ian Malcolm",
+        "Sales",
+        92000,
+        null,
+        "2020-05-17"
+      ],
+      [
+        13,
+        "Michael Scott",
+        "HR",
+        70000,
+        null,
+        "2019-01-14"
+      ],
+      [
+        15,
+        "Oscar Martinez",
+        "Finance",
+        98000,
+        null,
+        "2019-08-19"
+      ]
+    ]
+  },
+  "21": {
+    "columns": [
+      "name",
+      "department",
+      "manager_id"
+    ],
+    "rows": [
+      [
+        "Bob Smith",
+        "Engineering",
+        1
+      ],
+      [
+        "Charlie Brown",
+        "Engineering",
+        1
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        1
+      ],
+      [
+        "Evan Wright",
+        "Engineering",
+        2
+      ],
+      [
+        "George Clark",
+        "Marketing",
+        6
+      ],
+      [
+        "Hannah Abbott",
+        "Marketing",
+        6
+      ],
+      [
+        "Julia Roberts",
+        "Sales",
+        9
+      ],
+      [
+        "Kevin Bacon",
+        "Sales",
+        9
+      ],
+      [
+        "Laura Croft",
+        "Sales",
+        9
+      ],
+      [
+        "Nina Simone",
+        "HR",
+        13
+      ],
+      [
+        "Pam Beesly",
+        "Finance",
+        15
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        1
+      ],
+      [
+        "Rachel Green",
+        "Marketing",
+        6
+      ]
+    ]
+  },
+  "22": {
+    "columns": [
+      "name",
+      "department"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering"
+      ],
+      [
+        "Diana Prince",
+        "Engineering"
+      ]
+    ]
+  },
+  "23": {
+    "columns": [
+      "title",
+      "department",
+      "deadline"
+    ],
+    "rows": [
+      [
+        "Cloud Migration",
+        "Engineering",
+        "2026-12-30"
+      ],
+      [
+        "Mobile App Revamp",
+        "Engineering",
+        "2026-11-14"
+      ]
+    ]
+  },
+  "24": {
+    "columns": [
+      "id",
+      "employee_id",
+      "product",
+      "quantity",
+      "amount",
+      "ordered_on"
+    ],
+    "rows": [
+      [
+        1,
+        1,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-01-14"
+      ],
+      [
+        2,
+        2,
+        "4K Monitor",
+        2,
+        800,
+        "2026-01-17"
+      ],
+      [
+        6,
+        6,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-02-19"
+      ],
+      [
+        7,
+        7,
+        "Webcam HD",
+        2,
+        180,
+        "2026-02-28"
+      ],
+      [
+        9,
+        9,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-03-11"
+      ],
+      [
+        10,
+        10,
+        "USB-C Dock",
+        2,
+        320,
+        "2026-03-19"
+      ],
+      [
+        16,
+        16,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-05-09"
+      ],
+      [
+        17,
+        17,
+        "4K Monitor",
+        2,
+        800,
+        "2026-05-17"
+      ]
+    ]
+  },
+  "25": {
+    "columns": [
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering",
+        120000
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        115000
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        105000
+      ],
+      [
+        "Oscar Martinez",
+        "Finance",
+        98000
+      ],
+      [
+        "Bob Smith",
+        "Engineering",
+        95000
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        92000
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        88000
+      ],
+      [
+        "Charlie Brown",
+        "Engineering",
+        82000
+      ],
+      [
+        "Laura Croft",
+        "Sales",
+        81000
+      ],
+      [
+        "Julia Roberts",
+        "Sales",
+        75000
+      ],
+      [
+        "Evan Wright",
+        "Engineering",
+        72000
+      ],
+      [
+        "Michael Scott",
+        "HR",
+        70000
+      ],
+      [
+        "Kevin Bacon",
+        "Sales",
+        68000
+      ],
+      [
+        "Pam Beesly",
+        "Finance",
+        65000
+      ],
+      [
+        "Rachel Green",
+        "Marketing",
+        64000
+      ],
+      [
+        "George Clark",
+        "Marketing",
+        62000
+      ],
+      [
+        "Hannah Abbott",
+        "Marketing",
+        58000
+      ],
+      [
+        "Nina Simone",
+        "HR",
+        52000
+      ]
+    ]
+  },
+  "26": {
+    "columns": [
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering",
+        120000
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        115000
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        105000
+      ]
+    ]
+  },
+  "27": {
+    "columns": [
+      "department",
+      "name",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        "Alice Johnson",
+        120000
+      ],
+      [
+        "Engineering",
+        "Quentin Tarantino",
+        115000
+      ],
+      [
+        "Engineering",
+        "Diana Prince",
+        105000
+      ],
+      [
+        "Engineering",
+        "Bob Smith",
+        95000
+      ],
+      [
+        "Engineering",
+        "Charlie Brown",
+        82000
+      ],
+      [
+        "Engineering",
+        "Evan Wright",
+        72000
+      ],
+      [
+        "Finance",
+        "Oscar Martinez",
+        98000
+      ],
+      [
+        "Finance",
+        "Pam Beesly",
+        65000
+      ],
+      [
+        "HR",
+        "Michael Scott",
+        70000
+      ],
+      [
+        "HR",
+        "Nina Simone",
+        52000
+      ],
+      [
+        "Marketing",
+        "Fiona Gallagher",
+        88000
+      ],
+      [
+        "Marketing",
+        "Rachel Green",
+        64000
+      ],
+      [
+        "Marketing",
+        "George Clark",
+        62000
+      ],
+      [
+        "Marketing",
+        "Hannah Abbott",
+        58000
+      ],
+      [
+        "Sales",
+        "Ian Malcolm",
+        92000
+      ],
+      [
+        "Sales",
+        "Laura Croft",
+        81000
+      ],
+      [
+        "Sales",
+        "Julia Roberts",
+        75000
+      ],
+      [
+        "Sales",
+        "Kevin Bacon",
+        68000
+      ]
+    ]
+  },
+  "28": {
+    "columns": [
+      "name",
+      "department",
+      "joined_on"
+    ],
+    "rows": [
+      [
+        "Michael Scott",
+        "HR",
+        "2019-01-14"
+      ],
+      [
+        "Oscar Martinez",
+        "Finance",
+        "2019-08-19"
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        "2020-01-31"
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        "2020-05-17"
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        "2020-11-04"
+      ]
+    ]
+  },
+  "29": {
+    "columns": [
+      "id",
+      "employee_id",
+      "product",
+      "quantity",
+      "amount",
+      "ordered_on"
+    ],
+    "rows": [
+      [
+        9,
+        9,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-03-11"
+      ],
+      [
+        16,
+        16,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-05-09"
+      ],
+      [
+        1,
+        1,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-01-14"
+      ],
+      [
+        6,
+        6,
+        "Laptop Pro",
+        1,
+        2400,
+        "2026-02-19"
+      ],
+      [
+        2,
+        2,
+        "4K Monitor",
+        2,
+        800,
+        "2026-01-17"
+      ]
+    ]
+  },
+  "30": {
+    "columns": [
+      "title",
+      "department",
+      "deadline"
+    ],
+    "rows": [
+      [
+        "Q3 Ad Campaign",
+        "Marketing",
+        "2026-09-29"
+      ],
+      [
+        "AI Chatbot",
+        "Engineering",
+        "2026-10-14"
+      ],
+      [
+        "Employee Wellness",
+        "HR",
+        "2026-10-30"
+      ],
+      [
+        "Mobile App Revamp",
+        "Engineering",
+        "2026-11-14"
+      ],
+      [
+        "Enterprise CRM",
+        "Sales",
+        "2026-11-29"
+      ],
+      [
+        "ERP Modernization",
+        "Finance",
+        "2026-12-14"
+      ],
+      [
+        "Cloud Migration",
+        "Engineering",
+        "2026-12-30"
+      ]
+    ]
+  },
+  "31": {
+    "columns": [
+      "name",
+      "budget"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        850000
+      ],
+      [
+        "Sales",
+        500000
+      ],
+      [
+        "Finance",
+        400000
+      ],
+      [
+        "Marketing",
+        350000
+      ],
+      [
+        "HR",
+        200000
+      ]
+    ]
+  },
+  "32": {
+    "columns": [
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Oscar Martinez",
+        "Finance",
+        98000
+      ],
+      [
+        "Bob Smith",
+        "Engineering",
+        95000
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        92000
+      ]
+    ]
+  },
+  "33": {
+    "columns": [
+      "total_employees"
+    ],
+    "rows": [
+      [
+        "18"
+      ]
+    ]
+  },
+  "34": {
+    "columns": [
+      "min_salary",
+      "max_salary",
+      "avg_salary"
+    ],
+    "rows": [
+      [
+        52000,
+        120000,
+        "81222.222222222222"
+      ]
+    ]
+  },
+  "35": {
+    "columns": [
+      "department",
+      "employee_count"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        "6"
+      ],
+      [
+        "Marketing",
+        "4"
+      ],
+      [
+        "Sales",
+        "4"
+      ],
+      [
+        "Finance",
+        "2"
+      ],
+      [
+        "HR",
+        "2"
+      ]
+    ]
+  },
+  "36": {
+    "columns": [
+      "department",
+      "avg_salary"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        "98166.67"
+      ],
+      [
+        "Finance",
+        "81500.00"
+      ],
+      [
+        "Sales",
+        "79000.00"
+      ],
+      [
+        "Marketing",
+        "68000.00"
+      ],
+      [
+        "HR",
+        "61000.00"
+      ]
+    ]
+  },
+  "37": {
+    "columns": [
+      "employee_id",
+      "total_spent",
+      "order_count"
+    ],
+    "rows": [
+      [
+        1,
+        "2560",
+        "2"
+      ],
+      [
+        6,
+        "2400",
+        "1"
+      ],
+      [
+        9,
+        "2400",
+        "1"
+      ],
+      [
+        16,
+        "2400",
+        "1"
+      ],
+      [
+        2,
+        "1100",
+        "2"
+      ],
+      [
+        10,
+        "970",
+        "2"
+      ],
+      [
+        17,
+        "800",
+        "1"
+      ],
+      [
+        8,
+        "650",
+        "1"
+      ],
+      [
+        15,
+        "650",
+        "1"
+      ],
+      [
+        12,
+        "450",
+        "1"
+      ],
+      [
+        4,
+        "450",
+        "1"
+      ],
+      [
+        11,
+        "400",
+        "1"
+      ],
+      [
+        13,
+        "300",
+        "1"
+      ],
+      [
+        5,
+        "300",
+        "1"
+      ],
+      [
+        7,
+        "180",
+        "1"
+      ],
+      [
+        3,
+        "150",
+        "1"
+      ],
+      [
+        14,
+        "150",
+        "1"
+      ]
+    ]
+  },
+  "38": {
+    "columns": [
+      "department",
+      "employee_count"
+    ],
+    "rows": [
+      [
+        "Marketing",
+        "4"
+      ],
+      [
+        "Engineering",
+        "6"
+      ],
+      [
+        "Sales",
+        "4"
+      ]
+    ]
+  },
+  "39": {
+    "columns": [
+      "department",
+      "avg_salary"
+    ],
+    "rows": [
+      [
+        "Finance",
+        "81500.00"
+      ],
+      [
+        "Engineering",
+        "98166.67"
+      ]
+    ]
+  },
+  "40": {
+    "columns": [
+      "status",
+      "project_count"
+    ],
+    "rows": [
+      [
+        "active",
+        "7"
+      ],
+      [
+        "completed",
+        "5"
+      ],
+      [
+        "on_hold",
+        "3"
+      ]
+    ]
+  },
+  "41": {
+    "columns": [
+      "employee_name",
+      "department_name",
+      "budget"
+    ],
+    "rows": [
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        850000
+      ],
+      [
+        "Evan Wright",
+        "Engineering",
+        850000
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        850000
+      ],
+      [
+        "Charlie Brown",
+        "Engineering",
+        850000
+      ],
+      [
+        "Bob Smith",
+        "Engineering",
+        850000
+      ],
+      [
+        "Alice Johnson",
+        "Engineering",
+        850000
+      ],
+      [
+        "Rachel Green",
+        "Marketing",
+        350000
+      ],
+      [
+        "Hannah Abbott",
+        "Marketing",
+        350000
+      ],
+      [
+        "George Clark",
+        "Marketing",
+        350000
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        350000
+      ],
+      [
+        "Laura Croft",
+        "Sales",
+        500000
+      ],
+      [
+        "Kevin Bacon",
+        "Sales",
+        500000
+      ],
+      [
+        "Julia Roberts",
+        "Sales",
+        500000
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        500000
+      ],
+      [
+        "Nina Simone",
+        "HR",
+        200000
+      ],
+      [
+        "Michael Scott",
+        "HR",
+        200000
+      ],
+      [
+        "Pam Beesly",
+        "Finance",
+        400000
+      ],
+      [
+        "Oscar Martinez",
+        "Finance",
+        400000
+      ]
+    ]
+  },
+  "42": {
+    "columns": [
+      "department",
+      "department_head",
+      "budget"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        "Alice Johnson",
+        850000
+      ],
+      [
+        "Marketing",
+        "Fiona Gallagher",
+        350000
+      ],
+      [
+        "Sales",
+        "Ian Malcolm",
+        500000
+      ],
+      [
+        "HR",
+        "Michael Scott",
+        200000
+      ],
+      [
+        "Finance",
+        "Oscar Martinez",
+        400000
+      ]
+    ]
+  },
+  "43": {
+    "columns": [
+      "employee",
+      "manager"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        null
+      ],
+      [
+        "Bob Smith",
+        "Alice Johnson"
+      ],
+      [
+        "Charlie Brown",
+        "Alice Johnson"
+      ],
+      [
+        "Diana Prince",
+        "Alice Johnson"
+      ],
+      [
+        "Evan Wright",
+        "Bob Smith"
+      ],
+      [
+        "Fiona Gallagher",
+        null
+      ],
+      [
+        "George Clark",
+        "Fiona Gallagher"
+      ],
+      [
+        "Hannah Abbott",
+        "Fiona Gallagher"
+      ],
+      [
+        "Ian Malcolm",
+        null
+      ],
+      [
+        "Julia Roberts",
+        "Ian Malcolm"
+      ],
+      [
+        "Kevin Bacon",
+        "Ian Malcolm"
+      ],
+      [
+        "Laura Croft",
+        "Ian Malcolm"
+      ],
+      [
+        "Michael Scott",
+        null
+      ],
+      [
+        "Nina Simone",
+        "Michael Scott"
+      ],
+      [
+        "Oscar Martinez",
+        null
+      ],
+      [
+        "Pam Beesly",
+        "Oscar Martinez"
+      ],
+      [
+        "Quentin Tarantino",
+        "Alice Johnson"
+      ],
+      [
+        "Rachel Green",
+        "Fiona Gallagher"
+      ]
+    ]
+  },
+  "44": {
+    "columns": [
+      "name",
+      "project",
+      "role",
+      "hours"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Cloud Migration",
+        "Lead Architect",
+        35
+      ],
+      [
+        "Bob Smith",
+        "Cloud Migration",
+        "DevOps Engineer",
+        40
+      ],
+      [
+        "Diana Prince",
+        "AI Chatbot",
+        "ML Specialist",
+        38
+      ],
+      [
+        "Evan Wright",
+        "AI Chatbot",
+        "Junior Dev",
+        30
+      ],
+      [
+        "Charlie Brown",
+        "Security Audit",
+        "Security Analyst",
+        25
+      ],
+      [
+        "Quentin Tarantino",
+        "Security Audit",
+        "Senior Auditor",
+        30
+      ],
+      [
+        "Fiona Gallagher",
+        "Brand Redesign",
+        "Creative Director",
+        20
+      ],
+      [
+        "George Clark",
+        "Q3 Ad Campaign",
+        "Content Strategist",
+        40
+      ],
+      [
+        "Hannah Abbott",
+        "Q3 Ad Campaign",
+        "Social Media Lead",
+        35
+      ],
+      [
+        "Rachel Green",
+        "SEO Optimization",
+        "SEO Specialist",
+        25
+      ],
+      [
+        "Ian Malcolm",
+        "Enterprise CRM",
+        "Sales Director",
+        15
+      ],
+      [
+        "Julia Roberts",
+        "Enterprise CRM",
+        "CRM Admin",
+        40
+      ],
+      [
+        "Kevin Bacon",
+        "Global Expansion",
+        "Account Exec",
+        30
+      ],
+      [
+        "Laura Croft",
+        "Lead Scoring",
+        "Data Analyst",
+        35
+      ],
+      [
+        "Michael Scott",
+        "Employee Wellness",
+        "HR Coordinator",
+        20
+      ],
+      [
+        "Nina Simone",
+        "Payroll Upgrade",
+        "Payroll Analyst",
+        30
+      ],
+      [
+        "Oscar Martinez",
+        "ERP Modernization",
+        "Finance Lead",
+        25
+      ],
+      [
+        "Pam Beesly",
+        "Tax Automation",
+        "Tax Accountant",
+        35
+      ],
+      [
+        "Bob Smith",
+        "Mobile App Revamp",
+        "Mobile Engineer",
+        35
+      ],
+      [
+        "Quentin Tarantino",
+        "Data Lakehouse",
+        "Data Engineer",
+        40
+      ]
+    ]
+  },
+  "45": {
+    "columns": [
+      "name",
+      "product",
+      "amount"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "USB-C Dock",
+        160
+      ],
+      [
+        "Alice Johnson",
+        "Laptop Pro",
+        2400
+      ],
+      [
+        "Bob Smith",
+        "Noise-Cancelling Headphones",
+        300
+      ],
+      [
+        "Bob Smith",
+        "4K Monitor",
+        800
+      ],
+      [
+        "Charlie Brown",
+        "Mechanical Keyboard",
+        150
+      ],
+      [
+        "Diana Prince",
+        "Ergonomic Chair",
+        450
+      ],
+      [
+        "Evan Wright",
+        "Noise-Cancelling Headphones",
+        300
+      ],
+      [
+        "Fiona Gallagher",
+        "Laptop Pro",
+        2400
+      ],
+      [
+        "George Clark",
+        "Webcam HD",
+        180
+      ],
+      [
+        "Hannah Abbott",
+        "Standing Desk",
+        650
+      ],
+      [
+        "Ian Malcolm",
+        "Laptop Pro",
+        2400
+      ],
+      [
+        "Julia Roberts",
+        "USB-C Dock",
+        320
+      ],
+      [
+        "Julia Roberts",
+        "Standing Desk",
+        650
+      ],
+      [
+        "Kevin Bacon",
+        "4K Monitor",
+        400
+      ],
+      [
+        "Laura Croft",
+        "Ergonomic Chair",
+        450
+      ],
+      [
+        "Michael Scott",
+        "Noise-Cancelling Headphones",
+        300
+      ],
+      [
+        "Nina Simone",
+        "Mechanical Keyboard",
+        150
+      ],
+      [
+        "Oscar Martinez",
+        "Standing Desk",
+        650
+      ],
+      [
+        "Pam Beesly",
+        "Laptop Pro",
+        2400
+      ],
+      [
+        "Quentin Tarantino",
+        "4K Monitor",
+        800
+      ],
+      [
+        "Rachel Green",
+        null,
+        null
+      ]
+    ]
+  },
+  "46": {
+    "columns": [
+      "name",
+      "total_hours"
+    ],
+    "rows": [
+      [
+        "Bob Smith",
+        "75"
+      ],
+      [
+        "Quentin Tarantino",
+        "70"
+      ],
+      [
+        "Julia Roberts",
+        "40"
+      ],
+      [
+        "George Clark",
+        "40"
+      ],
+      [
+        "Diana Prince",
+        "38"
+      ],
+      [
+        "Laura Croft",
+        "35"
+      ],
+      [
+        "Alice Johnson",
+        "35"
+      ],
+      [
+        "Hannah Abbott",
+        "35"
+      ],
+      [
+        "Pam Beesly",
+        "35"
+      ],
+      [
+        "Nina Simone",
+        "30"
+      ],
+      [
+        "Kevin Bacon",
+        "30"
+      ],
+      [
+        "Evan Wright",
+        "30"
+      ],
+      [
+        "Rachel Green",
+        "25"
+      ],
+      [
+        "Oscar Martinez",
+        "25"
+      ],
+      [
+        "Charlie Brown",
+        "25"
+      ],
+      [
+        "Fiona Gallagher",
+        "20"
+      ],
+      [
+        "Michael Scott",
+        "20"
+      ],
+      [
+        "Ian Malcolm",
+        "15"
+      ]
+    ]
+  },
+  "47": {
+    "columns": [
+      "id",
+      "name",
+      "department"
+    ],
+    "rows": [
+      [
+        18,
+        "Rachel Green",
+        "Marketing"
+      ]
+    ]
+  },
+  "48": {
+    "columns": [
+      "id",
+      "product",
+      "amount",
+      "employee_name",
+      "department"
+    ],
+    "rows": [
+      [
+        1,
+        "Laptop Pro",
+        2400,
+        "Alice Johnson",
+        "Engineering"
+      ],
+      [
+        2,
+        "4K Monitor",
+        800,
+        "Bob Smith",
+        "Engineering"
+      ],
+      [
+        3,
+        "Mechanical Keyboard",
+        150,
+        "Charlie Brown",
+        "Engineering"
+      ],
+      [
+        4,
+        "Ergonomic Chair",
+        450,
+        "Diana Prince",
+        "Engineering"
+      ],
+      [
+        5,
+        "Noise-Cancelling Headphones",
+        300,
+        "Evan Wright",
+        "Engineering"
+      ],
+      [
+        6,
+        "Laptop Pro",
+        2400,
+        "Fiona Gallagher",
+        "Marketing"
+      ],
+      [
+        7,
+        "Webcam HD",
+        180,
+        "George Clark",
+        "Marketing"
+      ],
+      [
+        8,
+        "Standing Desk",
+        650,
+        "Hannah Abbott",
+        "Marketing"
+      ],
+      [
+        9,
+        "Laptop Pro",
+        2400,
+        "Ian Malcolm",
+        "Sales"
+      ],
+      [
+        10,
+        "USB-C Dock",
+        320,
+        "Julia Roberts",
+        "Sales"
+      ],
+      [
+        11,
+        "4K Monitor",
+        400,
+        "Kevin Bacon",
+        "Sales"
+      ],
+      [
+        12,
+        "Ergonomic Chair",
+        450,
+        "Laura Croft",
+        "Sales"
+      ],
+      [
+        13,
+        "Noise-Cancelling Headphones",
+        300,
+        "Michael Scott",
+        "HR"
+      ],
+      [
+        14,
+        "Mechanical Keyboard",
+        150,
+        "Nina Simone",
+        "HR"
+      ],
+      [
+        15,
+        "Standing Desk",
+        650,
+        "Oscar Martinez",
+        "Finance"
+      ],
+      [
+        16,
+        "Laptop Pro",
+        2400,
+        "Pam Beesly",
+        "Finance"
+      ],
+      [
+        17,
+        "4K Monitor",
+        800,
+        "Quentin Tarantino",
+        "Engineering"
+      ],
+      [
+        18,
+        "USB-C Dock",
+        160,
+        "Alice Johnson",
+        "Engineering"
+      ],
+      [
+        19,
+        "Noise-Cancelling Headphones",
+        300,
+        "Bob Smith",
+        "Engineering"
+      ],
+      [
+        20,
+        "Standing Desk",
+        650,
+        "Julia Roberts",
+        "Sales"
+      ]
+    ]
+  },
+  "49": {
+    "columns": [
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering",
+        120000
+      ],
+      [
+        "Bob Smith",
+        "Engineering",
+        95000
+      ],
+      [
+        "Charlie Brown",
+        "Engineering",
+        82000
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        105000
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        88000
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        92000
+      ],
+      [
+        "Oscar Martinez",
+        "Finance",
+        98000
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        115000
+      ]
+    ]
+  },
+  "50": {
+    "columns": [
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering",
+        120000
+      ],
+      [
+        "Bob Smith",
+        "Engineering",
+        95000
+      ],
+      [
+        "Charlie Brown",
+        "Engineering",
+        82000
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        105000
+      ],
+      [
+        "Evan Wright",
+        "Engineering",
+        72000
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        115000
+      ]
+    ]
+  },
+  "51": {
+    "columns": [
+      "name",
+      "department"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering"
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing"
+      ],
+      [
+        "Ian Malcolm",
+        "Sales"
+      ],
+      [
+        "Pam Beesly",
+        "Finance"
+      ]
+    ]
+  },
+  "52": {
+    "columns": [
+      "name",
+      "department"
+    ],
+    "rows": [
+      [
+        "Bob Smith",
+        "Engineering"
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering"
+      ]
+    ]
+  },
+  "53": {
+    "columns": [
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        "Engineering",
+        120000
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        105000
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        88000
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        92000
+      ],
+      [
+        "Laura Croft",
+        "Sales",
+        81000
+      ],
+      [
+        "Michael Scott",
+        "HR",
+        70000
+      ],
+      [
+        "Oscar Martinez",
+        "Finance",
+        98000
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        115000
+      ]
+    ]
+  },
+  "54": {
+    "columns": [
+      "department",
+      "headcount"
+    ],
+    "rows": [
+      [
+        "Marketing",
+        "4"
+      ],
+      [
+        "Engineering",
+        "6"
+      ],
+      [
+        "Sales",
+        "4"
+      ]
+    ]
+  },
+  "55": {
+    "columns": [
+      "title",
+      "avg_proj_hours"
+    ],
+    "rows": [
+      [
+        "Lead Scoring",
+        "35.0000000000000000"
+      ],
+      [
+        "Data Lakehouse",
+        "40.0000000000000000"
+      ],
+      [
+        "Q3 Ad Campaign",
+        "37.5000000000000000"
+      ],
+      [
+        "Mobile App Revamp",
+        "35.0000000000000000"
+      ],
+      [
+        "Tax Automation",
+        "35.0000000000000000"
+      ],
+      [
+        "AI Chatbot",
+        "34.0000000000000000"
+      ],
+      [
+        "Cloud Migration",
+        "37.5000000000000000"
+      ]
+    ]
+  },
+  "56": {
+    "columns": [
+      "name",
+      "department"
+    ],
+    "rows": [
+      [
+        "Charlie Brown",
+        "Engineering"
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing"
+      ],
+      [
+        "Kevin Bacon",
+        "Sales"
+      ],
+      [
+        "Laura Croft",
+        "Sales"
+      ],
+      [
+        "Nina Simone",
+        "HR"
+      ],
+      [
+        "Pam Beesly",
+        "Finance"
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering"
+      ],
+      [
+        "Rachel Green",
+        "Marketing"
+      ]
+    ]
+  },
+  "57": {
+    "columns": [
+      "row_num",
+      "name",
+      "department",
+      "salary"
+    ],
+    "rows": [
+      [
+        "1",
+        "Alice Johnson",
+        "Engineering",
+        120000
+      ],
+      [
+        "2",
+        "Quentin Tarantino",
+        "Engineering",
+        115000
+      ],
+      [
+        "3",
+        "Diana Prince",
+        "Engineering",
+        105000
+      ],
+      [
+        "4",
+        "Oscar Martinez",
+        "Finance",
+        98000
+      ],
+      [
+        "5",
+        "Bob Smith",
+        "Engineering",
+        95000
+      ],
+      [
+        "6",
+        "Ian Malcolm",
+        "Sales",
+        92000
+      ],
+      [
+        "7",
+        "Fiona Gallagher",
+        "Marketing",
+        88000
+      ],
+      [
+        "8",
+        "Charlie Brown",
+        "Engineering",
+        82000
+      ],
+      [
+        "9",
+        "Laura Croft",
+        "Sales",
+        81000
+      ],
+      [
+        "10",
+        "Julia Roberts",
+        "Sales",
+        75000
+      ],
+      [
+        "11",
+        "Evan Wright",
+        "Engineering",
+        72000
+      ],
+      [
+        "12",
+        "Michael Scott",
+        "HR",
+        70000
+      ],
+      [
+        "13",
+        "Kevin Bacon",
+        "Sales",
+        68000
+      ],
+      [
+        "14",
+        "Pam Beesly",
+        "Finance",
+        65000
+      ],
+      [
+        "15",
+        "Rachel Green",
+        "Marketing",
+        64000
+      ],
+      [
+        "16",
+        "George Clark",
+        "Marketing",
+        62000
+      ],
+      [
+        "17",
+        "Hannah Abbott",
+        "Marketing",
+        58000
+      ],
+      [
+        "18",
+        "Nina Simone",
+        "HR",
+        52000
+      ]
+    ]
+  },
+  "58": {
+    "columns": [
+      "department",
+      "name",
+      "salary",
+      "dept_rank"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        "Alice Johnson",
+        120000,
+        "1"
+      ],
+      [
+        "Engineering",
+        "Quentin Tarantino",
+        115000,
+        "2"
+      ],
+      [
+        "Engineering",
+        "Diana Prince",
+        105000,
+        "3"
+      ],
+      [
+        "Engineering",
+        "Bob Smith",
+        95000,
+        "4"
+      ],
+      [
+        "Engineering",
+        "Charlie Brown",
+        82000,
+        "5"
+      ],
+      [
+        "Engineering",
+        "Evan Wright",
+        72000,
+        "6"
+      ],
+      [
+        "Finance",
+        "Oscar Martinez",
+        98000,
+        "1"
+      ],
+      [
+        "Finance",
+        "Pam Beesly",
+        65000,
+        "2"
+      ],
+      [
+        "HR",
+        "Michael Scott",
+        70000,
+        "1"
+      ],
+      [
+        "HR",
+        "Nina Simone",
+        52000,
+        "2"
+      ],
+      [
+        "Marketing",
+        "Fiona Gallagher",
+        88000,
+        "1"
+      ],
+      [
+        "Marketing",
+        "Rachel Green",
+        64000,
+        "2"
+      ],
+      [
+        "Marketing",
+        "George Clark",
+        62000,
+        "3"
+      ],
+      [
+        "Marketing",
+        "Hannah Abbott",
+        58000,
+        "4"
+      ],
+      [
+        "Sales",
+        "Ian Malcolm",
+        92000,
+        "1"
+      ],
+      [
+        "Sales",
+        "Laura Croft",
+        81000,
+        "2"
+      ],
+      [
+        "Sales",
+        "Julia Roberts",
+        75000,
+        "3"
+      ],
+      [
+        "Sales",
+        "Kevin Bacon",
+        68000,
+        "4"
+      ]
+    ]
+  },
+  "59": {
+    "columns": [
+      "salary_rank",
+      "name",
+      "salary",
+      "department"
+    ],
+    "rows": [
+      [
+        "1",
+        "Alice Johnson",
+        120000,
+        "Engineering"
+      ],
+      [
+        "2",
+        "Quentin Tarantino",
+        115000,
+        "Engineering"
+      ],
+      [
+        "3",
+        "Diana Prince",
+        105000,
+        "Engineering"
+      ],
+      [
+        "4",
+        "Oscar Martinez",
+        98000,
+        "Finance"
+      ],
+      [
+        "5",
+        "Bob Smith",
+        95000,
+        "Engineering"
+      ],
+      [
+        "6",
+        "Ian Malcolm",
+        92000,
+        "Sales"
+      ],
+      [
+        "7",
+        "Fiona Gallagher",
+        88000,
+        "Marketing"
+      ],
+      [
+        "8",
+        "Charlie Brown",
+        82000,
+        "Engineering"
+      ],
+      [
+        "9",
+        "Laura Croft",
+        81000,
+        "Sales"
+      ],
+      [
+        "10",
+        "Julia Roberts",
+        75000,
+        "Sales"
+      ],
+      [
+        "11",
+        "Evan Wright",
+        72000,
+        "Engineering"
+      ],
+      [
+        "12",
+        "Michael Scott",
+        70000,
+        "HR"
+      ],
+      [
+        "13",
+        "Kevin Bacon",
+        68000,
+        "Sales"
+      ],
+      [
+        "14",
+        "Pam Beesly",
+        65000,
+        "Finance"
+      ],
+      [
+        "15",
+        "Rachel Green",
+        64000,
+        "Marketing"
+      ],
+      [
+        "16",
+        "George Clark",
+        62000,
+        "Marketing"
+      ],
+      [
+        "17",
+        "Hannah Abbott",
+        58000,
+        "Marketing"
+      ],
+      [
+        "18",
+        "Nina Simone",
+        52000,
+        "HR"
+      ]
+    ]
+  },
+  "60": {
+    "columns": [
+      "id",
+      "product",
+      "amount",
+      "ordered_on",
+      "running_total"
+    ],
+    "rows": [
+      [
+        1,
+        "Laptop Pro",
+        2400,
+        "2026-01-14",
+        "2400"
+      ],
+      [
+        2,
+        "4K Monitor",
+        800,
+        "2026-01-17",
+        "3200"
+      ],
+      [
+        3,
+        "Mechanical Keyboard",
+        150,
+        "2026-02-01",
+        "3350"
+      ],
+      [
+        4,
+        "Ergonomic Chair",
+        450,
+        "2026-02-09",
+        "3800"
+      ],
+      [
+        5,
+        "Noise-Cancelling Headphones",
+        300,
+        "2026-02-13",
+        "4100"
+      ],
+      [
+        6,
+        "Laptop Pro",
+        2400,
+        "2026-02-19",
+        "6500"
+      ],
+      [
+        7,
+        "Webcam HD",
+        180,
+        "2026-02-28",
+        "6680"
+      ],
+      [
+        8,
+        "Standing Desk",
+        650,
+        "2026-03-04",
+        "7330"
+      ],
+      [
+        9,
+        "Laptop Pro",
+        2400,
+        "2026-03-11",
+        "9730"
+      ],
+      [
+        10,
+        "USB-C Dock",
+        320,
+        "2026-03-19",
+        "10050"
+      ],
+      [
+        11,
+        "4K Monitor",
+        400,
+        "2026-04-01",
+        "10450"
+      ],
+      [
+        12,
+        "Ergonomic Chair",
+        450,
+        "2026-04-07",
+        "10900"
+      ],
+      [
+        13,
+        "Noise-Cancelling Headphones",
+        300,
+        "2026-04-14",
+        "11200"
+      ],
+      [
+        14,
+        "Mechanical Keyboard",
+        150,
+        "2026-04-21",
+        "11350"
+      ],
+      [
+        15,
+        "Standing Desk",
+        650,
+        "2026-05-02",
+        "12000"
+      ],
+      [
+        16,
+        "Laptop Pro",
+        2400,
+        "2026-05-09",
+        "14400"
+      ],
+      [
+        17,
+        "4K Monitor",
+        800,
+        "2026-05-17",
+        "15200"
+      ],
+      [
+        18,
+        "USB-C Dock",
+        160,
+        "2026-05-31",
+        "15360"
+      ],
+      [
+        19,
+        "Noise-Cancelling Headphones",
+        300,
+        "2026-06-11",
+        "15660"
+      ],
+      [
+        20,
+        "Standing Desk",
+        650,
+        "2026-06-24",
+        "16310"
+      ]
+    ]
+  },
+  "61": {
+    "columns": [
+      "name",
+      "salary",
+      "previous_higher_salary",
+      "salary_gap"
+    ],
+    "rows": [
+      [
+        "Alice Johnson",
+        120000,
+        null,
+        null
+      ],
+      [
+        "Quentin Tarantino",
+        115000,
+        120000,
+        5000
+      ],
+      [
+        "Diana Prince",
+        105000,
+        115000,
+        10000
+      ],
+      [
+        "Oscar Martinez",
+        98000,
+        105000,
+        7000
+      ],
+      [
+        "Bob Smith",
+        95000,
+        98000,
+        3000
+      ],
+      [
+        "Ian Malcolm",
+        92000,
+        95000,
+        3000
+      ],
+      [
+        "Fiona Gallagher",
+        88000,
+        92000,
+        4000
+      ],
+      [
+        "Charlie Brown",
+        82000,
+        88000,
+        6000
+      ],
+      [
+        "Laura Croft",
+        81000,
+        82000,
+        1000
+      ],
+      [
+        "Julia Roberts",
+        75000,
+        81000,
+        6000
+      ],
+      [
+        "Evan Wright",
+        72000,
+        75000,
+        3000
+      ],
+      [
+        "Michael Scott",
+        70000,
+        72000,
+        2000
+      ],
+      [
+        "Kevin Bacon",
+        68000,
+        70000,
+        2000
+      ],
+      [
+        "Pam Beesly",
+        65000,
+        68000,
+        3000
+      ],
+      [
+        "Rachel Green",
+        64000,
+        65000,
+        1000
+      ],
+      [
+        "George Clark",
+        62000,
+        64000,
+        2000
+      ],
+      [
+        "Hannah Abbott",
+        58000,
+        62000,
+        4000
+      ],
+      [
+        "Nina Simone",
+        52000,
+        58000,
+        6000
+      ]
+    ]
+  },
+  "62": {
+    "columns": [
+      "name",
+      "department",
+      "joined_on",
+      "next_hire_date"
+    ],
+    "rows": [
+      [
+        "Michael Scott",
+        "HR",
+        "2019-01-14",
+        "2019-08-19"
+      ],
+      [
+        "Oscar Martinez",
+        "Finance",
+        "2019-08-19",
+        "2020-01-31"
+      ],
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        "2020-01-31",
+        "2020-05-17"
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        "2020-05-17",
+        "2020-11-04"
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        "2020-11-04",
+        "2021-03-14"
+      ],
+      [
+        "Alice Johnson",
+        "Engineering",
+        "2021-03-14",
+        "2021-04-21"
+      ],
+      [
+        "Laura Croft",
+        "Sales",
+        "2021-04-21",
+        "2021-05-31"
+      ],
+      [
+        "Bob Smith",
+        "Engineering",
+        "2021-05-31",
+        "2021-09-19"
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        "2021-09-19",
+        "2021-10-10"
+      ],
+      [
+        "Julia Roberts",
+        "Sales",
+        "2021-10-10",
+        "2022-01-09"
+      ],
+      [
+        "Charlie Brown",
+        "Engineering",
+        "2022-01-09",
+        "2022-03-13"
+      ],
+      [
+        "Pam Beesly",
+        "Finance",
+        "2022-03-13",
+        "2022-08-14"
+      ],
+      [
+        "George Clark",
+        "Marketing",
+        "2022-08-14",
+        "2022-11-30"
+      ],
+      [
+        "Kevin Bacon",
+        "Sales",
+        "2022-11-30",
+        "2023-01-31"
+      ],
+      [
+        "Hannah Abbott",
+        "Marketing",
+        "2023-01-31",
+        "2023-04-11"
+      ],
+      [
+        "Evan Wright",
+        "Engineering",
+        "2023-04-11",
+        "2023-05-09"
+      ],
+      [
+        "Nina Simone",
+        "HR",
+        "2023-05-09",
+        "2023-06-30"
+      ],
+      [
+        "Rachel Green",
+        "Marketing",
+        "2023-06-30",
+        null
+      ]
+    ]
+  },
+  "63": {
+    "columns": [
+      "name",
+      "department",
+      "salary",
+      "dept_avg_salary"
+    ],
+    "rows": [
+      [
+        "Quentin Tarantino",
+        "Engineering",
+        115000,
+        "98166.67"
+      ],
+      [
+        "Bob Smith",
+        "Engineering",
+        95000,
+        "98166.67"
+      ],
+      [
+        "Charlie Brown",
+        "Engineering",
+        82000,
+        "98166.67"
+      ],
+      [
+        "Diana Prince",
+        "Engineering",
+        105000,
+        "98166.67"
+      ],
+      [
+        "Alice Johnson",
+        "Engineering",
+        120000,
+        "98166.67"
+      ],
+      [
+        "Evan Wright",
+        "Engineering",
+        72000,
+        "98166.67"
+      ],
+      [
+        "Oscar Martinez",
+        "Finance",
+        98000,
+        "81500.00"
+      ],
+      [
+        "Pam Beesly",
+        "Finance",
+        65000,
+        "81500.00"
+      ],
+      [
+        "Michael Scott",
+        "HR",
+        70000,
+        "61000.00"
+      ],
+      [
+        "Nina Simone",
+        "HR",
+        52000,
+        "61000.00"
+      ],
+      [
+        "Rachel Green",
+        "Marketing",
+        64000,
+        "68000.00"
+      ],
+      [
+        "Fiona Gallagher",
+        "Marketing",
+        88000,
+        "68000.00"
+      ],
+      [
+        "George Clark",
+        "Marketing",
+        62000,
+        "68000.00"
+      ],
+      [
+        "Hannah Abbott",
+        "Marketing",
+        58000,
+        "68000.00"
+      ],
+      [
+        "Laura Croft",
+        "Sales",
+        81000,
+        "79000.00"
+      ],
+      [
+        "Kevin Bacon",
+        "Sales",
+        68000,
+        "79000.00"
+      ],
+      [
+        "Julia Roberts",
+        "Sales",
+        75000,
+        "79000.00"
+      ],
+      [
+        "Ian Malcolm",
+        "Sales",
+        92000,
+        "79000.00"
+      ]
+    ]
+  },
+  "64": {
+    "columns": [
+      "department",
+      "name",
+      "salary",
+      "rn"
+    ],
+    "rows": [
+      [
+        "Engineering",
+        "Alice Johnson",
+        120000,
+        "1"
+      ],
+      [
+        "Engineering",
+        "Quentin Tarantino",
+        115000,
+        "2"
+      ],
+      [
+        "Finance",
+        "Oscar Martinez",
+        98000,
+        "1"
+      ],
+      [
+        "Finance",
+        "Pam Beesly",
+        65000,
+        "2"
+      ],
+      [
+        "HR",
+        "Michael Scott",
+        70000,
+        "1"
+      ],
+      [
+        "HR",
+        "Nina Simone",
+        52000,
+        "2"
+      ],
+      [
+        "Marketing",
+        "Fiona Gallagher",
+        88000,
+        "1"
+      ],
+      [
+        "Marketing",
+        "Rachel Green",
+        64000,
+        "2"
+      ],
+      [
+        "Sales",
+        "Ian Malcolm",
+        92000,
+        "1"
+      ],
+      [
+        "Sales",
+        "Laura Croft",
+        81000,
+        "2"
+      ]
+    ]
+  }
+}

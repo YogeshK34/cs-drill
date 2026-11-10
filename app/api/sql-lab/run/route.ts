@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSession } from "@/lib/session";
 import { getPool } from "@/lib/db";
+import expectedOutputsRaw from "@/lib/sql-expected-outputs.json";
+import { validateQueryResult, ValidationResult } from "@/lib/sql-validator";
+import { SQL_QUESTIONS } from "@/lib/sql-questions";
+
+const expectedOutputs = expectedOutputsRaw as Record<
+  string,
+  { columns: string[]; rows: (string | number | boolean | null)[][] }
+>;
 
 export async function POST(request: NextRequest) {
   const session = await getSession();
@@ -11,6 +19,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const query = typeof body?.query === "string" ? body.query.trim() : "";
+    const questionId = body?.questionId ? Number(body.questionId) : null;
 
     if (!query) {
       return NextResponse.json(
@@ -57,11 +66,46 @@ export async function POST(request: NextRequest) {
         })
       );
 
+      // Validate result if questionId is provided and expected output exists
+      let validation: ValidationResult | null = null;
+      let expectedData: { columns: string[]; rows: (string | number | boolean | null)[][] } | null = null;
+
+      if (questionId && expectedOutputs[String(questionId)]) {
+        expectedData = expectedOutputs[String(questionId)];
+        const qMeta = SQL_QUESTIONS.find((q) => q.id === questionId);
+        const requiresStrictOrder = Boolean(
+          qMeta && (qMeta.level === "order-limit" || /ORDER BY/i.test(qMeta.answer))
+        );
+
+        validation = validateQueryResult(
+          { columns, rows },
+          expectedData,
+          requiresStrictOrder
+        );
+
+        if (validation.isCorrect) {
+          // Save solved: true to sql_lab.progress in Neon
+          await pool.query(
+            `INSERT INTO sql_lab.progress (user_id, question_id, revealed, solved, attempted_at)
+             VALUES ($1, $2, FALSE, TRUE, NOW())
+             ON CONFLICT (user_id, question_id)
+             DO UPDATE SET
+               solved = TRUE,
+               attempted_at = NOW()`,
+            [session.userId, questionId]
+          ).catch((err) => {
+            console.warn("Could not save solved status:", err);
+          });
+        }
+      }
+
       return NextResponse.json({
         columns,
         rows,
         rowCount: rawRows.length,
         isTruncated: rawRows.length > 100,
+        validation,
+        expected: expectedData,
       });
     } catch (dbErr: unknown) {
       // Ensure rollback on error

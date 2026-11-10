@@ -111,7 +111,9 @@ cs-drill/
 │   ├── interview-questions.ts   # 70+ Curated real interview questions by topic & company
 │   ├── questions.ts             # 100+ Question bank & Fisher-Yates shuffle engine
 │   ├── session.ts               # JWT session signing and cookie management
+│   ├── sql-expected-outputs.json # Precomputed canonical outputs for all 64 questions (zero extra DB calls)
 │   ├── sql-questions.ts         # 64 Curated SQL questions across 8 progression levels
+│   ├── sql-validator.ts         # In-memory SQL output validation (columns, row count, multiset equivalence)
 │   └── types.ts                 # TypeScript interfaces (Question, InterviewQuestion, etc.)
 ├── public/                      # Static branding assets
 ├── next.config.ts               # Next.js 16 configuration (Turbopack, cacheComponents)
@@ -327,6 +329,18 @@ flowchart TD
     ROLLBACK;
     ```
   - Data mutations are stopped natively by PostgreSQL, returning a clean alert: `⚠ Only SELECT queries are allowed in SQL Lab`.
+- **Zero-Extra-DB-Call Query Validation & In-Memory Diffing**:
+  - Uses static precomputed expected result sets (`lib/sql-expected-outputs.json`) for all 64 canonical SQL questions.
+  - When a user submits a query to `/api/sql-lab/run`, the database executes the query once to fetch results.
+  - An in-memory comparator (`lib/sql-validator.ts`) compares the output against the question's expected result set:
+    - **Column Count & Header Verification**: Ensures all projected columns match expected attribute counts.
+    - **Row Count Matching**: Detects unconstrained joins, missing filters, or incorrect limit clauses.
+    - **Multiset & Ordered Equivalence**: Supports order-insensitive multiset matching for unordered queries and strict order-sensitive matching for queries testing `ORDER BY`.
+  - **Zero Database Overhead**: Requires zero secondary database executions or costly `EXCEPT` clauses on Postgres.
+- **Interactive Validation UX**:
+  - **Success / Mismatch Banner**: Instant visual feedback displaying `🎉 PASSED` or `⚠️ OUTPUT MISMATCH` with specific diagnostics (row count delta, column count mismatch, or value discrepancies).
+  - **Output Tab Switcher**: Seamlessly toggles between "Your Output" and "Expected Output" without revealing the canonical SQL query.
+  - **Persistent SOLVED Status**: Automatically stores `solved: true` in `sql_lab.progress` upon passing validation, rendering a persistent `SOLVED ✓` badge on the question header.
 - **Pedagogical Progression**:
   1. `Beginner`: Projections, column aliasing, and raw table scans.
   2. `SELECT`: Distinct sets, arithmetic expressions, and result limits.
